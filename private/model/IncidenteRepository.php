@@ -23,55 +23,43 @@ class IncidenteRepository extends PDORepository
 
   public function __construct()
   {
-    $this->stmtDelete = $this->newPreparedStmt("DELETE FROM usuario WHERE idUsuario = ?");
-    $this->stmtCreate = $this->newPreparedStmt("INSERT INTO usuario (nombreUsuario, mail, contrasena, nombre, apellido,
-                                                dni, localidad)  VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $this->stmtUpdate = $this->newPreparedStmt("UPDATE usuario SET mail = ?, contrasena = ?, nombre = ?, apellido = ?
-                                                WHERE idUsuario = ?");
+    $this->stmtDelete = $this->newPreparedStmt("DELETE FROM inciente WHERE idIncidente = ?");
+    $this->stmtCreate = $this->newPreparedStmt("INSERT INTO incidente (descripcion, idTipoIncidente, idUsuario, fechaInicio, fechaFin,
+                                                idEstado)  VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $this->stmtUpdate = $this->newPreparedStmt("UPDATE incidente SET estado = ?
+                                                WHERE idIncidente = ?");
   }
 
   public function getAll()
   {
-    return $this->queryToUserArray($this->queryList("SELECT * FROM usuario"));
+    return $this->queryToIncidenteArray($this->queryList("SELECT * FROM incidente"));
   }
 
-  public function delete($idUsuario)
+  public function delete($idIncidente)
   {
-    return $this->stmtDelete->execute([$idUsuario]);
+    return $this->stmtDelete->execute([$idIncidente]);
   }
 
-  public function create($nombreUsuario, $mail, $contrasena, $nombre, $apellido, $dni)
+
+//ASUMO QUE MANDA EL OBJETO USUARIO, TIPO INCIDENTE Y ESTADO (COMO OBJETOS PROPIAMENTE DICHOS)
+  public function create($descripcion, $tipoIncidente, $usuario, $fechaInicio, $fechaFin, $estado)
   {
-    return $this->stmtCreate->execute([$nombreUsuario, $mail, $contrasena, $nombre, $apellido, $dni, 'lala']);
+    $idTipoIncidente = $tipoIncidente -> idTipoIncidente;
+    $idEstado = $estado -> idEstado;
+    $usuario = $usuario -> id;
+
+    return $this->stmtCreate->execute([$descripcion, $idTipoIncidente, $idUsuario, $fechaInicio, $fechaFin, $idEstado]);
   }
 
-  public function update($mail, $contrasena, $nombre, $apellido, $idUsuario)
+  public function update($estado, $incidente)
   {
-    return $this->stmtUpdate->execute([$mail, $contrasena, $nombre, $apellido, $idUsuario]);
+    $idEstado = $estado -> idEstado;
+    $idIncidente = $incidente -> idIncidente;
+    return $this->stmtUpdate->execute([$idEstado, $idIncidente]);
   }
 
-  public function getUser($idUsuario)
+  public function getIncidente($idIncidente)
   {
-    return $this->queryToUserArray($this->queryList("SELECT * FROM usuario where idUsuario = ?", [$idUsuario]))[0];
-  }
-
-  private function queryUser($nombreUsuario, $contrasena)
-  {
-    return $this->queryToUserArray($this->queryList("SELECT * FROM usuario where nombreUsuario = ? AND contrasena = ?", [$nombreUsuario, $contrasena]));
-  }
-
-  public function containsUser($nombreUsuario, $contrasena)
-  {
-    return count($this->queryUser($nombreUsuario, $contrasena)) > 0;
-  }
-
-  public function findUser($nombreUsuario, $contrasena)
-  {
-    return $this->queryUser($nombreUsuario, $contrasena)[0];
-  }
-
-  public function userNameExists($nombreUsuario)
-  {
-    return count($this->queryList("SELECT * FROM usuario where nombreUsuario = ?", [$nombreUsuario]));
+    return $this->queryToIncidenteArray($this->queryList("SELECT * FROM incidente where idIncidente = ?", [$idIncidente]))[0];
   }
 }

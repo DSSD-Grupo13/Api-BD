@@ -14,4 +14,4 @@ require_once 'private/model/TipoIncidente.php';
 require_once 'private/model/IncidenteRepository.php';
 require_once "private/model/UsuarioRepository.php";
 require_once 'private/model/EstadoRepository.php';
-require_once "private/model/TipoIncidente.php";
+require_once "private/model/TipoIncidenteRepository.php";
