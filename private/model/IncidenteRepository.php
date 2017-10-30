@@ -15,8 +15,7 @@ class IncidenteRepository extends PDORepository
         $element['tipoIncidente'],
         $element['descripcion'],
         $element['estado'],
-        $element['fechaInicio'],
-      );
+        $element['fechaInicio']);
     }
     return $answer;
   }
