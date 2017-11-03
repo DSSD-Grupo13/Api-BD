@@ -1,5 +1,5 @@
 <?php
-class Incidente implements \JsonSerializable
+class Incident implements \JsonSerializable
 {
   public $idIncidente;
   public $idUsuario;

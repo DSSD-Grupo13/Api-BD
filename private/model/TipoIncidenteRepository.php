@@ -19,21 +19,20 @@ class TipoIncidenteRepository extends PDORepository
 
   public function __construct()
   {
-    $this->stmtDelete = $this->newPreparedStmt("DELETE FROM tipoIncidente WHERE idTipoIncidente = ?");
-    $this->stmtCreate = $this->newPreparedStmt("INSERT INTO tipoIncidente (nombre)  VALUES (?)");
-    $this->stmtUpdate = $this->newPreparedStmt("UPDATE tipoIncidente SET nombre = ? WHERE idTipoIncidente = ?");
+    $this->stmtDelete = $this->newPreparedStmt("DELETE FROM tipoincidente WHERE idTipoIncidente = ?");
+    $this->stmtCreate = $this->newPreparedStmt("INSERT INTO tipoincidente (nombre)  VALUES (?)");
+    $this->stmtUpdate = $this->newPreparedStmt("UPDATE tipoincidente SET nombre = ? WHERE idTipoIncidente = ?");
   }
 
   public function getAll()
   {
-    return $this->queryToTipoIncidenteArray($this->queryList("SELECT * FROM tipoIncidente"));
+    return $this->queryToTipoIncidenteArray($this->queryList("SELECT * FROM tipoincidente"));
   }
 
   public function delete($idTipoIncidente)
   {
     return $this->stmtDelete->execute([$idTipoIncidente]);
   }
-
 
   public function create($nombre)
   {
@@ -47,6 +46,11 @@ class TipoIncidenteRepository extends PDORepository
 
   public function getTipoIncidente($idTipoIncidente)
   {
-    return $this->queryToTipoIncidenteArray($this->queryList("SELECT * FROM tipoIncidente where idTipoIncidente = ?", [$idTipoIncidente]))[0];
+    return $this->queryToTipoIncidenteArray($this->queryList("SELECT * FROM tipoincidente where idTipoIncidente = ?", [$idTipoIncidente]))[0];
+  }
+
+  public function incidentTypeExists($idTipoIncidente)
+  {
+    return !empty($this->queryList("SELECT * FROM tipoincidente WHERE idTipoIncidente = ?", [$idTipoIncidente]));
   }
 }

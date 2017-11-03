@@ -27,7 +27,7 @@ La respuesta es un objeto `JSON` que contiene los datos del incidente:
     "idTipoIncidente": "1",
     "descripcion": "incendio ",
     "estado": "1",
-    "fechaInicio": "2017-11-03"
+    "fechaInicio": "03-11-2017"
 }
 ```
 
@@ -49,7 +49,7 @@ La respuesta es un array de objetos `JSON` que contiene los datos del incidente:
         "idTipoIncidente": "1",
         "descripcion": "incendio ",
         "estado": "1",
-        "fechaInicio": "2017-11-03"
+        "fechaInicio": "03-11-2017"
     },
     {
         "idIncidente": "2",
@@ -57,9 +57,71 @@ La respuesta es un array de objetos `JSON` que contiene los datos del incidente:
         "idTipoIncidente": "2",
         "descripcion": " choque",
         "estado": "1",
-        "fechaInicio": "2017-11-03"
+        "fechaInicio": "03-11-2017"
     }
 ]
+```
+
+4. `'/incidentes'` --> Registrar incidente
+
+Se debe enviar un requerimiento `HTTP POST` a la URL `/incidentes`.
+
+La solicitud debe incluir en el `body` un objeto `JSON` en donde se indiquen los siguientes parametros: IdUsuario, IdTipoIncidente, Fecha, Descripcion
+
+Ejemplo:
+
+    HTTP 200 OK
+
+```JSON
+{
+  "idUsuario": "1",
+  "idTipoIncidente": "2",
+  "descripcion": "choque"
+}
+```
+Los cuatro parametros serán validados:
+
+* `IdUsuario` debe ser el de un usuario registrado en el sistema
+* `idTipoIncidente` debe ser alguno de los identificadores de tipo de incidentes
+* `descripcion`: string
+
+  Esto devuelve una respuesta en donde el `body` es un objeto `JSON` con la siguiente estructura:
+
+    HTTP 200 OK
+
+```JSON
+{
+    "error_code": "integer",
+    "message": "string",
+    "idIncidente": "integer"
+}
+```
+Donde:
+
+* `message`: contiene un texto descriptivo del resultado de la operación
+* `idIncidente`: contiene un `id` que es el identificador asignado por el sistema
+* `error_code`: este campo unicamente se incluye  cuando la respuesta `HTTP` vuelve con un `Status Code 400 Bad Request`. Es un codigo de error cuyo significado puede consultarse en el endpoint `/error_code/{:id_error_code}`
+
+#### Ejemplo incidente creado correctamente:
+
+    HTTP 200 OK
+
+```JSON
+{
+    "message": "Se confirmó el expediente # 2",
+    "idIncidente": "2"
+}
+```
+#### Ejemplo error:
+
+    HTTP 400 Bad Request
+
+```JSON
+{
+    "error_code": "1",
+    "message": "El usuario indicado no existe en el sistema",
+    "idIncidente": ""
+}
 ```
 
   # Instalación
