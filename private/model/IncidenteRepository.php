@@ -11,10 +11,10 @@ class IncidenteRepository extends PDORepository
     foreach ($query as &$element) {
       $answer[] = new Incidente(
         $element['idIncidente'],
-        $element['usuario'],
-        $element['tipoIncidente'],
+        $element['idUsuario'],
+        $element['idTipoIncidente'],
         $element['descripcion'],
-        $element['estado'],
+        $element['idEstado'],
         $element['fechaInicio']);
     }
     return $answer;
@@ -25,13 +25,17 @@ class IncidenteRepository extends PDORepository
     $this->stmtDelete = $this->newPreparedStmt("DELETE FROM inciente WHERE idIncidente = ?");
     $this->stmtCreate = $this->newPreparedStmt("INSERT INTO incidente (descripcion, idTipoIncidente, idUsuario, fechaInicio, fechaFin,
                                                 idEstado)  VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $this->stmtUpdate = $this->newPreparedStmt("UPDATE incidente SET estado = ?
-                                                WHERE idIncidente = ?");
+    $this->stmtUpdate = $this->newPreparedStmt("UPDATE incidente SET idEstado = ? WHERE idIncidente = ?");
+  }
+
+  public function getIncidentes()
+  {
+    return $this->queryToIncidenteArray($this->queryList("SELECT * FROM incidente"));
   }
 
   public function getAll()
   {
-    return $this->queryToIncidenteArray($this->queryList("SELECT * FROM incidente"));
+    return $this->getIncidentes();
   }
 
   public function delete($idIncidente)
@@ -39,26 +43,19 @@ class IncidenteRepository extends PDORepository
     return $this->stmtDelete->execute([$idIncidente]);
   }
 
-
-//ASUMO QUE MANDA EL OBJETO USUARIO, TIPO INCIDENTE Y ESTADO (COMO OBJETOS PROPIAMENTE DICHOS)
-  public function create($descripcion, $tipoIncidente, $usuario, $fechaInicio, $fechaFin, $estado)
+  public function create($descripcion, $idTipoIncidente, $idUsuario, $fechaInicio, $fechaFin, $idEstado)
   {
-    $idTipoIncidente = $tipoIncidente -> idTipoIncidente;
-    $idEstado = $estado -> idEstado;
-    $usuario = $usuario -> id;
-
     return $this->stmtCreate->execute([$descripcion, $idTipoIncidente, $idUsuario, $fechaInicio, $fechaFin, $idEstado]);
   }
 
-  public function update($estado, $incidente)
+  public function update($idEstado, $idIncidente)
   {
-    $idEstado = $estado -> idEstado;
-    $idIncidente = $incidente -> idIncidente;
     return $this->stmtUpdate->execute([$idEstado, $idIncidente]);
   }
 
   public function getIncidente($idIncidente)
   {
-    return $this->queryToIncidenteArray($this->queryList("SELECT * FROM incidente where idIncidente = ?", [$idIncidente]))[0];
+    $data = $this->queryList("SELECT * FROM incidente where idIncidente = ?", [$idIncidente]);
+    return $this->queryToIncidenteArray($data)[0];
   }
 }

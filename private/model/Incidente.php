@@ -1,17 +1,18 @@
 <?php
-class Incidente {
-  private $idIncidente;
-  private $usuario;
-  private $tipoIncidente;
-  private $descripcion;
-  private $estado;
-  private $fechaInicio;
+class Incidente implements \JsonSerializable
+{
+  public $idIncidente;
+  public $idUsuario;
+  public $idTipoIncidente;
+  public $descripcion;
+  public $estado;
+  public $fechaInicio;
 
-  public function __construct( $idIncidente, $usuario, $tipoIncidente, $descripcion, $estado, $fechaInicio)
+  public function __construct($idIncidente, $idUsuario, $idTipoIncidente, $descripcion, $estado, $fechaInicio)
   {
     $this->idIncidente = $idIncidente;
-    $this->usuario = $usuario;
-    $this->tipoIncidente = $tipoIncidente;
+    $this->idUsuario = $idUsuario;
+    $this->idTipoIncidente = $idTipoIncidente;
     $this->descripcion = $descripcion;
     $this->estado = $estado;
     $this->fechaInicio = $fechaInicio;
@@ -22,14 +23,14 @@ class Incidente {
     return $this->idIncidente;
   }
 
-  public function getUsuario()
+  public function getidUsuario()
   {
-    return $this->usuario;
+    return $this->idUsuario;
   }
 
-  public function getTipoIncidente()
+  public function getIdTipoIncidente()
   {
-    return $this->tipoIncidente;
+    return $this->idTipoIncidente;
   }
 
   public function getDescripcion()
@@ -45,5 +46,10 @@ class Incidente {
   public function getFechaInicio()
   {
     return $this->fechaInicio;
+  }
+
+  public function jsonSerialize()
+  {
+    return get_object_vars($this);
   }
 }

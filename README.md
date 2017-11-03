@@ -6,13 +6,65 @@
 
  # Endpoints
 
- *
- *
- *
+1. `'/'` --> Documentación
+
+Un requerimiento `HTTP GET` a la URL `'/'` retorna este documento
+
+2. `'/incidente/{:id}'` --> Retorna los datos de un incidente
+
+Se debe enviar un requerimiento `HTTP GET` a la URL `/incidente/{:id}`.
+
+El parametro fecha incluido en la URL debe ser el identificador del incidente que se quiere consultar
+
+La respuesta es un objeto `JSON` que contiene los datos del incidente:
+
+    HTTP 200 OK
+
+```JSON
+{
+    "idIncidente": "1",
+    "idUsuario": "1",
+    "idTipoIncidente": "1",
+    "descripcion": "incendio ",
+    "estado": "1",
+    "fechaInicio": "2017-11-03"
+}
+```
+
+3. `'/incidentes'` --> Retorna la lista de incidentes
+
+Se debe enviar un requerimiento `HTTP GET` a la URL `/incidente/{:id}`.
+
+El parametro fecha incluido en la URL debe ser el identificador del incidente que se quiere consultar
+
+La respuesta es un array de objetos `JSON` que contiene los datos del incidente:
+
+    HTTP 200 OK
+
+```JSON
+[
+    {
+        "idIncidente": "1",
+        "idUsuario": "1",
+        "idTipoIncidente": "1",
+        "descripcion": "incendio ",
+        "estado": "1",
+        "fechaInicio": "2017-11-03"
+    },
+    {
+        "idIncidente": "2",
+        "idUsuario": "1",
+        "idTipoIncidente": "2",
+        "descripcion": " choque",
+        "estado": "1",
+        "fechaInicio": "2017-11-03"
+    }
+]
+```
 
   # Instalación
 
-1. Se agrega un <Virtual-Host> al servidor de Apache2, en este ejemplo la API se registra en el dominio `api-incidentes.com`
+1. Se agrega un `Virtual-Host` al servidor de Apache2, en este ejemplo la API se registra en el dominio `api-incidentes.com`
 
   Crear el archivo `/etc/apache2/sites-available/api-incidentes.com.conf` con el contenido:
 
