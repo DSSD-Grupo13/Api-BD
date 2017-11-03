@@ -49,13 +49,13 @@ $app->post("/incidentes", function (Request $request, Response $response, $args)
   return $response->withStatus(200)->withJson(['message' => $message, 'id_incidente' => $id_incidente]);
 });
 
-/*$app->get("/error_code/{id_error_code}", function (Request $request, Response $response, $args)
+$app->get("/error_code/{id_error_code}", function (Request $request, Response $response, $args)
 {
   $error_code =  $request->getAttribute('id_error_code');
-  return $response->withStatus(200)->withJson(array('error_code' => $error_code, 'description' => \TurnosAPIException::getDescription($error_code)));
+  return $response->withStatus(200)->withJson(array('error_code' => $error_code, 'description' => \InvalidArgException::getDescription($error_code)));
 });
 
-$app->get("/turnos[/[{fecha}]]", function (Request $request, Response $response, $args) use ($incidentsRepository)
+/*$app->get("/turnos[/[{fecha}]]", function (Request $request, Response $response, $args) use ($incidentsRepository)
 {
   $date =  $request->getAttribute('fecha', date('d-m-Y'));
   \Validations::isValidDate($date);
