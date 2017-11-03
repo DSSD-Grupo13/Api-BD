@@ -11,6 +11,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 $incidentsRepository = new \IncidentsRepository;
 $incidentTypesRepository = new \IncidentTypesRepository;
 $incidetStatesRepository = new \IncidentStatesRepository;
+$usersRepository = new \UserRepository;
 
 $app = new \Slim\App;
 $container = $app->getContainer();
@@ -66,6 +67,18 @@ $app->get("/incidentes/{id_usuario}", function (Request $request, Response $resp
   $id_usuario =  $request->getAttribute('id_usuario');
   \Validations::isValidUserId($id_usuario);
   return $response->withStatus(200)->withJson($incidentsRepository->getIncidentesUsuario($id_usuario));
+});
+
+$app->get("/usuarios/{id_usuario}", function (Request $request, Response $response, $args) use ($usersRepository)
+{
+  $id_usuario =  $request->getAttribute('id_usuario');
+  \Validations::isValidUserId($id_usuario);
+  return $response->withStatus(200)->withJson($usersRepository->getUser($id_usuario));
+});
+
+$app->get("/usuarios", function (Request $request, Response $response, $args) use ($usersRepository)
+{
+  return $response->withStatus(200)->withJson($usersRepository->getUsers());
 });
 
 $app->post("/incidentes", function (Request $request, Response $response, $args) use ($incidentsRepository)

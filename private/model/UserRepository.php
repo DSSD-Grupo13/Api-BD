@@ -3,35 +3,15 @@ class UserRepository extends PDORepository
 {
   private $stmtDelete;
   private $stmtCreate;
-  private $stmtUpdate;
-
-  private function queryToUserArray($query)
-  {
-    $answer = [];
-    foreach ($query as &$element) {
-      $answer[] = new User(
-        $element['idUsuario'],
-        $element['nombreUsuario'],
-        $element['contrasena'],
-        $element['mail'],
-        $element['dni'],
-        $element['nombre'],
-        $element['apellido']
-      );
-    }
-    return $answer;
-  }
 
   public function __construct()
   {
     $this->stmtDelete = $this->newPreparedStmt("DELETE FROM usuario WHERE idUsuario = ?");
-    $this->stmtCreate = $this->newPreparedStmt("INSERT INTO usuario (nombreUsuario, mail, contrasena, nombre, apellido,
-                                                dni, localidad)  VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $this->stmtUpdate = $this->newPreparedStmt("UPDATE usuario SET mail = ?, contrasena = ?, nombre = ?, apellido = ?
-                                                WHERE idUsuario = ?");
+    $this->stmtCreate = $this->newPreparedStmt("INSERT INTO usuario (nombreUsuario, mail, contrasena, nombre, apellido, dni)
+                                                                                 VALUES (?, ?, ?, ?, ?, ?, ?)");
   }
 
-  public function getAll()
+  public function getUsers()
   {
     return $this->queryToUserArray($this->queryList("SELECT * FROM usuario"));
   }
@@ -43,7 +23,7 @@ class UserRepository extends PDORepository
 
   public function create($nombreUsuario, $mail, $contrasena, $nombre, $apellido, $dni)
   {
-    return $this->stmtCreate->execute([$nombreUsuario, $mail, $contrasena, $nombre, $apellido, $dni, 'lala']);
+    return $this->stmtCreate->execute([$nombreUsuario, $mail, $contrasena, $nombre, $apellido, $dni]);
   }
 
   public function update($mail, $contrasena, $nombre, $apellido, $idUsuario)
@@ -80,5 +60,23 @@ class UserRepository extends PDORepository
   {
     return !empty($this->queryList("SELECT * FROM usuario WHERE idUsuario = ?", [$idUsuario]));
   }
+
+  private function queryToUserArray($query)
+  {
+    $answer = [];
+    foreach ($query as &$element) {
+      $answer[] = new User(
+        $element['idUsuario'],
+        $element['nombreUsuario'],
+        $element['contrasena'],
+        $element['mail'],
+        $element['dni'],
+        $element['nombre'],
+        $element['apellido']
+      );
+    }
+    return $answer;
+  }
+
 }
 

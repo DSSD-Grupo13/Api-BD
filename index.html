@@ -14,11 +14,9 @@
 
 Un requerimiento `HTTP GET` a la URL `'/'` retorna este documento
 
-2. `'/incidente/{:id}'` --> Retorna los datos de un incidente
+2. `'/incidente/{:id_incidente}'` --> Retorna los datos de un incidente
 
 Se debe enviar un requerimiento `HTTP GET` a la URL `/incidente/{:id}`.
-
-El parametro fecha incluido en la URL debe ser el identificador del incidente que se quiere consultar
 
 La respuesta es un objeto `JSON` que contiene los datos del incidente:
 
@@ -38,8 +36,6 @@ La respuesta es un objeto `JSON` que contiene los datos del incidente:
 3. `'/incidentes'` --> Retorna la lista de incidentes
 
 Se debe enviar un requerimiento `HTTP GET` a la URL `/incidente`.
-
-El parametro fecha incluido en la URL debe ser el identificador del incidente que se quiere consultar
 
 La respuesta es un array de objetos `JSON` que contiene los datos de los incidentes:
 
@@ -70,7 +66,7 @@ La respuesta es un array de objetos `JSON` que contiene los datos de los inciden
 
 Se debe enviar un requerimiento `HTTP GET` a la URL `/incidentes/{:id_usuario}`.
 
-El parametro fecha incluido en la URL debe ser el identificador del usuario que se quiere consultar
+El parametro incluido en la URL debe ser el identificador del usuario que se quiere consultar
 
 La respuesta es un array de objetos `JSON` que contiene los datos de los incidentes:
 
@@ -135,7 +131,7 @@ Donde:
 
 * `message`: contiene un texto descriptivo del resultado de la operación
 * `idIncidente`: contiene un `id` que es el identificador asignado por el sistema
-* `error_code`: este campo unicamente se incluye  cuando la respuesta `HTTP` vuelve con un `Status Code 400 Bad Request`. Es un codigo de error cuyo significado puede consultarse en el endpoint `/error_code/{:id_error_code}`
+* `error_code`: este campo unicamente se incluye  cuando la respuesta `HTTP` vuelve con un `Status Code 400 Bad Request`. Es un codigo de error cuyo significado puede consultarse en el endpoint `/error-code/{:id_error_code}`
 
 #### Ejemplo incidente creado correctamente:
 
@@ -159,13 +155,11 @@ Donde:
 }
 ```
 
-6. `'/tipos-incidente'` --> Retorna la lista de tipos de incidentes
+6. `'/tipos-incidente'` --> Retorna la lista de tipos de incidente
 
-Se debe enviar un requerimiento `HTTP GET` a la URL `/tipos-incidente/{:id}`.
+Se debe enviar un requerimiento `HTTP GET` a la URL `/tipos-incidente`.
 
-El parametro fecha incluido en la URL debe ser el identificador del incidente que se quiere consultar
-
-La respuesta es un array de objetos `JSON` que contiene los datos de los incidentes:
+La respuesta es un array de objetos `JSON` que contiene los datos de los diferentes tipso de incidents:
 
     HTTP 200 OK
 
@@ -186,11 +180,128 @@ La respuesta es un array de objetos `JSON` que contiene los datos de los inciden
 ]
 ```
 
-7. `'/error_code/{:id_error_code}'` --> Consulta de código de error
+7. `'/tipos-incidente/{:id_tipo_incidente}'` --> Consulta de tipo de incidente
 
-Se debe enviar un requerimiento `HTTP GET` a la URL `/error_code/{:id_error_code}`.
+Se debe enviar un requerimiento `HTTP GET` a la URL `/tipos-incidente/{:id_tipo_incidente}`.
 
-El parametro fecha incluido en la URL es un identificador del código de error que se quiere consutlar
+El parametro incluido en la URL es un identificador del tipo de incidente que se quiere consutlar
+
+La respuesta es un objeto `JSON` con la siguiente estructura:
+
+    HTTP 200 OK
+
+```JSON
+{
+    "idTipoIncidente": "1",
+    "nombre": "casa"
+}
+```
+
+8. `'/estados-incidente'` --> Retorna la lista de estados de incidente
+
+Se debe enviar un requerimiento `HTTP GET` a la URL `/estados-incidente`.
+
+La respuesta es un array de objetos `JSON` que contiene los datos de los diferentes estados de los incidentes:
+
+    HTTP 200 OK
+
+```JSON
+[
+    {
+        "idEstado": "1",
+        "nombre": "pendiente"
+    },
+    {
+        "idEstado": "2",
+        "nombre": "en-presupuesto"
+    }
+]
+```
+
+9. `'/estados-incidente/{:id_estado_incidente}'` --> Consulta de estado de incidente
+
+Se debe enviar un requerimiento `HTTP GET` a la URL `/tipos-incidente/{:id_tipo_incidente}`.
+
+El parametro incluido en la URL es un identificador del estado de incidente que se quiere consutlar
+
+La respuesta es un objeto `JSON` con la siguiente estructura:
+
+    HTTP 200 OK
+
+```JSON
+{
+    "idEstado": "1",
+    "nombre": "pendiente"
+}
+```
+
+10. `'/usuarios'` --> Retorna la lista de usuarios registrados
+
+Se debe enviar un requerimiento `HTTP GET` a la URL `/usuarios`.
+
+La respuesta es un array de objetos `JSON` que contiene los datos de los usuarios registrados
+
+    HTTP 200 OK
+
+```JSON
+[
+    {
+        "id": "1",
+        "nombreUsuario": "mlopez",
+        "contrasena": "bpm",
+        "email": "mlopez@gmail.com",
+        "dni": "38951674",
+        "nombre": "maria",
+        "apellido": "lopez"
+    },
+    {
+        "id": "2",
+        "nombreUsuario": "mgomez",
+        "contrasena": "bpm",
+        "email": "mgomez@gmail.com",
+        "dni": "37694301",
+        "nombre": "mateo",
+        "apellido": "gomez"
+    },
+    {
+        "id": "3",
+        "nombreUsuario": "jrodriguez",
+        "contrasena": "bpm",
+        "email": "jrodriguez@gmail.com",
+        "dni": "36950167",
+        "nombre": "juan",
+        "apellido": "rodriguez"
+    }
+]
+```
+
+11. `'/usuarios/{:id_usuario}'` --> Consulta de usuario
+
+Se debe enviar un requerimiento `HTTP GET` a la URL `/usuarios/{:id_usuario}`.
+
+El parametro incluido en la URL es un identificador del usuario que se quiere consutlar
+
+La respuesta es un objeto `JSON` con la siguiente estructura:
+
+    HTTP 200 OK
+
+```JSON
+{
+    "id": "1",
+    "nombreUsuario": "mlopez",
+    "contrasena": "bpm",
+    "email": "mlopez@gmail.com",
+    "dni": "38951674",
+    "nombre": "maria",
+    "apellido": "lopez"
+}
+```
+
+12. `'/error-code/{:id_error_code}'` --> Consulta de código de error
+
+Se debe enviar un requerimiento `HTTP GET` a la URL `/error-code/{:id_error_code}`.
+
+El parametro incluido en la URL es un identificador del código de error que se quiere consutlar
 
 La respuesta es un objeto `JSON` con la siguiente estructura:
 

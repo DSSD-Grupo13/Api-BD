@@ -231,7 +231,69 @@ La respuesta es un objeto `JSON` con la siguiente estructura:
 }
 ```
 
-10. `'/error-code/{:id_error_code}'` --> Consulta de código de error
+10. `'/usuarios'` --> Retorna la lista de usuarios registrados
+
+Se debe enviar un requerimiento `HTTP GET` a la URL `/usuarios`.
+
+La respuesta es un array de objetos `JSON` que contiene los datos de los usuarios registrados
+
+    HTTP 200 OK
+
+```JSON
+[
+    {
+        "id": "1",
+        "nombreUsuario": "mlopez",
+        "contrasena": "bpm",
+        "email": "mlopez@gmail.com",
+        "dni": "38951674",
+        "nombre": "maria",
+        "apellido": "lopez"
+    },
+    {
+        "id": "2",
+        "nombreUsuario": "mgomez",
+        "contrasena": "bpm",
+        "email": "mgomez@gmail.com",
+        "dni": "37694301",
+        "nombre": "mateo",
+        "apellido": "gomez"
+    },
+    {
+        "id": "3",
+        "nombreUsuario": "jrodriguez",
+        "contrasena": "bpm",
+        "email": "jrodriguez@gmail.com",
+        "dni": "36950167",
+        "nombre": "juan",
+        "apellido": "rodriguez"
+    }
+]
+```
+
+11. `'/usuarios/{:id_usuario}'` --> Consulta de usuario
+
+Se debe enviar un requerimiento `HTTP GET` a la URL `/usuarios/{:id_usuario}`.
+
+El parametro incluido en la URL es un identificador del usuario que se quiere consutlar
+
+La respuesta es un objeto `JSON` con la siguiente estructura:
+
+    HTTP 200 OK
+
+```JSON
+{
+    "id": "1",
+    "nombreUsuario": "mlopez",
+    "contrasena": "bpm",
+    "email": "mlopez@gmail.com",
+    "dni": "38951674",
+    "nombre": "maria",
+    "apellido": "lopez"
+}
+```
+
+12. `'/error-code/{:id_error_code}'` --> Consulta de código de error
 
 Se debe enviar un requerimiento `HTTP GET` a la URL `/error-code/{:id_error_code}`.
 
