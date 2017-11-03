@@ -22,7 +22,7 @@ class Bonita
     try {
       $response = $this->createClient()->request(
         'PUT',
-        "API/bpm/caseVariable/$idCaso/nombreVariable",
+        "API/bpm/caseVariable/$idCaso/$nombreVariable",
         [
           'headers' => [
             'X-Bonita-API-Token' => $token->getValue()
