@@ -123,6 +123,22 @@ Donde:
     "idIncidente": ""
 }
 ```
+5. `'/error_code/{:id_error_code}'` --> Consulta de código de error
+
+Se debe enviar un requerimiento `HTTP GET` a la URL `/error_code/{:id_error_code}`.
+
+El parametro fecha incluido en la URL es un identificador del código de error que se quiere consutlar
+
+La respuesta es un objeto `JSON` con la siguiente estructura:
+
+    HTTP 200 OK
+
+```JSON
+{
+  "id": "1",
+  "description": "El turno solicitado ya se encuentra ocupado"
+}
+```
 
   # Instalación
 
