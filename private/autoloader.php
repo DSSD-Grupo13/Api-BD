@@ -1,6 +1,7 @@
 <?php
-require_once 'private/model/PDORepository.php';
+require_once '../vendor/autoload.php';
 
+require_once 'private/model/PDORepository.php';
 require_once 'private/model/Incidente.php';
 require_once 'private/model/Usuario.php';
 require_once 'private/model/Estado.php';
