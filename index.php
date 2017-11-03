@@ -35,6 +35,13 @@ $app->get("/incidentes", function (Request $request, Response $response, $args) 
   return $response->withStatus(200)->withJson($incidentsRepository->getIncidentes());
 });
 
+$app->get("/incidentes/{id_usuario}", function (Request $request, Response $response, $args) use ($incidentsRepository)
+{
+  $id_usuario =  $request->getAttribute('id_usuario');
+  \Validations::isValidUserId($id_usuario);
+  return $response->withStatus(200)->withJson($incidentsRepository->getIncidentesUsuario($id_usuario));
+});
+
 $app->post("/incidentes", function (Request $request, Response $response, $args) use ($incidentsRepository)
 {
   $idUsuario = $request->getParsedBodyParam('idUsuario');
@@ -54,12 +61,5 @@ $app->get("/error_code/{id_error_code}", function (Request $request, Response $r
   $error_code =  $request->getAttribute('id_error_code');
   return $response->withStatus(200)->withJson(array('error_code' => $error_code, 'description' => \InvalidArgException::getDescription($error_code)));
 });
-
-/*$app->get("/turnos[/[{fecha}]]", function (Request $request, Response $response, $args) use ($incidentsRepository)
-{
-  $date =  $request->getAttribute('fecha', date('d-m-Y'));
-  \Validations::isValidDate($date);
-  return $response->withStatus(200)->withJson($incidentsRepository->incidents($date));
-});*/
 
 $app->run();

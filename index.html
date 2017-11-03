@@ -4,11 +4,11 @@
 <xmp theme="cerulean" style="display:none;">
 # API de Incidentes
 
-Esta API consiste en un webservice REST que brinda un servicio de solicitud de presupuestos
+  Esta API consiste en un webservice REST que brinda un servicio de solicitud de presupuestos
 
-Esta implementado utilizando las tecnologias PHP, Apache y el framework Slim
+  Esta implementado utilizando las tecnologias PHP, Apache y el framework Slim
 
-# Endpoints
+  # Endpoints
 
 1. `'/'` --> Documentación
 
@@ -22,16 +22,16 @@ El parametro fecha incluido en la URL debe ser el identificador del incidente qu
 
 La respuesta es un objeto `JSON` que contiene los datos del incidente:
 
-  HTTP 200 OK
+    HTTP 200 OK
 
 ```JSON
 {
-  "idIncidente": "1",
-  "idUsuario": "1",
-  "idTipoIncidente": "1",
-  "descripcion": "incendio ",
-  "estado": "1",
-  "fechaInicio": "03-11-2017"
+    "idIncidente": "1",
+    "idUsuario": "1",
+    "idTipoIncidente": "1",
+    "descripcion": "incendio ",
+    "estado": "1",
+    "fechaInicio": "03-11-2017"
 }
 ```
 
@@ -41,32 +41,63 @@ Se debe enviar un requerimiento `HTTP GET` a la URL `/incidente/{:id}`.
 
 El parametro fecha incluido en la URL debe ser el identificador del incidente que se quiere consultar
 
-La respuesta es un array de objetos `JSON` que contiene los datos del incidente:
+La respuesta es un array de objetos `JSON` que contiene los datos de los incidentes:
 
-  HTTP 200 OK
+    HTTP 200 OK
 
 ```JSON
 [
-  {
-      "idIncidente": "1",
-      "idUsuario": "1",
-      "idTipoIncidente": "1",
-      "descripcion": "incendio ",
-      "estado": "1",
-      "fechaInicio": "03-11-2017"
-  },
-  {
-      "idIncidente": "2",
-      "idUsuario": "1",
-      "idTipoIncidente": "2",
-      "descripcion": " choque",
-      "estado": "1",
-      "fechaInicio": "03-11-2017"
-  }
+    {
+        "idIncidente": "1",
+        "idUsuario": "1",
+        "idTipoIncidente": "1",
+        "descripcion": "incendio ",
+        "estado": "1",
+        "fechaInicio": "03-11-2017"
+    },
+    {
+        "idIncidente": "2",
+        "idUsuario": "1",
+        "idTipoIncidente": "2",
+        "descripcion": " choque",
+        "estado": "1",
+        "fechaInicio": "03-11-2017"
+    }
 ]
 ```
 
-4. `'/incidentes'` --> Registrar incidente
+4. `'/incidentes/{:id_usuario}'` --> Retorna la lista de incidentes de un usuario
+
+Se debe enviar un requerimiento `HTTP GET` a la URL `/incidentes/{:id_usuario}`.
+
+El parametro fecha incluido en la URL debe ser el identificador del usuario que se quiere consultar
+
+La respuesta es un array de objetos `JSON` que contiene los datos de los incidentes:
+
+    HTTP 200 OK
+
+```JSON
+[
+    {
+        "idIncidente": "1",
+        "idUsuario": "1",
+        "idTipoIncidente": "1",
+        "descripcion": "incendio ",
+        "estado": "1",
+        "fechaInicio": "03-11-2017"
+    },
+    {
+        "idIncidente": "2",
+        "idUsuario": "1",
+        "idTipoIncidente": "2",
+        "descripcion": " choque",
+        "estado": "1",
+        "fechaInicio": "03-11-2017"
+    }
+]
+```
+
+5. `'/incidentes'` --> Registrar incidente
 
 Se debe enviar un requerimiento `HTTP POST` a la URL `/incidentes`.
 
@@ -74,13 +105,13 @@ La solicitud debe incluir en el `body` un objeto `JSON` en donde se indiquen los
 
 Ejemplo:
 
-  HTTP 200 OK
+    HTTP 200 OK
 
 ```JSON
 {
-"idUsuario": "1",
-"idTipoIncidente": "2",
-"descripcion": "choque"
+  "idUsuario": "1",
+  "idTipoIncidente": "2",
+  "descripcion": "choque"
 }
 ```
 Los cuatro parametros serán validados:
@@ -89,15 +120,15 @@ Los cuatro parametros serán validados:
 * `idTipoIncidente` debe ser alguno de los identificadores de tipo de incidentes
 * `descripcion`: string
 
-Esto devuelve una respuesta en donde el `body` es un objeto `JSON` con la siguiente estructura:
+  Esto devuelve una respuesta en donde el `body` es un objeto `JSON` con la siguiente estructura:
 
-  HTTP 200 OK
+    HTTP 200 OK
 
 ```JSON
 {
-  "error_code": "integer",
-  "message": "string",
-  "idIncidente": "integer"
+    "error_code": "integer",
+    "message": "string",
+    "idIncidente": "integer"
 }
 ```
 Donde:
@@ -108,26 +139,26 @@ Donde:
 
 #### Ejemplo incidente creado correctamente:
 
-  HTTP 200 OK
+    HTTP 200 OK
 
 ```JSON
 {
-  "message": "Se confirmó el expediente # 2",
-  "idIncidente": "2"
+    "message": "Se confirmó el expediente # 2",
+    "idIncidente": "2"
 }
 ```
 #### Ejemplo error:
 
-  HTTP 400 Bad Request
+    HTTP 400 Bad Request
 
 ```JSON
 {
-  "error_code": "1",
-  "message": "El usuario indicado no existe en el sistema",
-  "idIncidente": ""
+    "error_code": "1",
+    "message": "El usuario indicado no existe en el sistema",
+    "idIncidente": ""
 }
 ```
-5. `'/error_code/{:id_error_code}'` --> Consulta de código de error
+6. `'/error_code/{:id_error_code}'` --> Consulta de código de error
 
 Se debe enviar un requerimiento `HTTP GET` a la URL `/error_code/{:id_error_code}`.
 
@@ -135,58 +166,58 @@ El parametro fecha incluido en la URL es un identificador del código de error q
 
 La respuesta es un objeto `JSON` con la siguiente estructura:
 
-  HTTP 200 OK
+    HTTP 200 OK
 
 ```JSON
 {
-"id": "1",
-"description": "El turno solicitado ya se encuentra ocupado"
+  "id": "1",
+  "description": "El turno solicitado ya se encuentra ocupado"
 }
 ```
 
-# Instalación
+  # Instalación
 
 1. Se agrega un `Virtual-Host` al servidor de Apache2, en este ejemplo la API se registra en el dominio `api-incidentes.com`
 
-Crear el archivo `/etc/apache2/sites-available/api-incidentes.com.conf` con el contenido:
+  Crear el archivo `/etc/apache2/sites-available/api-incidentes.com.conf` con el contenido:
 
-```xml
-<VirtualHost *:80>
-    ServerAdmin webmaster@localhost
-    ServerName api-incidentes.com
-    ServerAlias www.api-incidentes.com
-    DocumentRoot /var/www/html/api-incidentes.com
+  ```xml
+  <VirtualHost *:80>
+      ServerAdmin webmaster@localhost
+      ServerName api-incidentes.com
+      ServerAlias www.api-incidentes.com
+      DocumentRoot /var/www/html/api-incidentes.com
 
-    <Directory /var/www/html/api-incidentes.com/>
-        Options Indexes FollowSymLinks
-        AllowOverride All
-        Require all granted
-    </Directory>
-  </VirtualHost>
-```
+      <Directory /var/www/html/api-incidentes.com/>
+          Options Indexes FollowSymLinks
+          AllowOverride All
+          Require all granted
+      </Directory>
+    </VirtualHost>
+  ```
 
-`Nota: El directorio /var/www/html/api-incidentes.com debe existir`
+  `Nota: El directorio /var/www/html/api-incidentes.com debe existir`
 
 2. Ejecutar los comandos en una terminal (los dos primeros pueden no ser necesarios si ya se ejecutaron alguna vez):
 
-```
-sudo a2enmod rewrite
+  ```
+  sudo a2enmod rewrite
 
-sudo a2dissite 000-default.conf
+  sudo a2dissite 000-default.conf
 
-sudo a2ensite api-incidentes.com
-```
+  sudo a2ensite api-incidentes.com
+  ```
 
 3. Agregar en hosts: `/etc/hosts`
 
-```
-127.0.0.1 api-incidentes.com
-```
+  ```
+  127.0.0.1 api-incidentes.com
+  ```
 
 4. Luego reiniciar el servicio de Apache
 
-```
-  systemctl restart apache2
+  ```
+    systemctl restart apache2
 ```
 </xmp>
 <script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>

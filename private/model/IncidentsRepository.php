@@ -30,7 +30,7 @@ class IncidentsRepository extends PDORepository
 
   public function getIncidentesUsuario($idUsuario)
   {
-    return $this->queryToIncidenteArray($this->queryList("SELECT * FROM incidente WHERE I.idUsuario = ?", [$idUsuario]));
+    return $this->queryToIncidenteArray($this->queryList("SELECT * FROM incidente WHERE idUsuario = ?", [$idUsuario]));
   }
 
   public function getIncidente($idIncidente)
