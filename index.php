@@ -36,6 +36,13 @@ $app->get("/incidentes", function (Request $request, Response $response, $args) 
   return $response->withStatus(200)->withJson($incidentsRepository->getIncidentes());
 });
 
+$app->get("/tipos-incidente/{id_tipo_incidente}", function (Request $request, Response $response, $args) use ($incidentTypesRepository)
+{
+  $id_tipo_incidente =  $request->getAttribute('id_tipo_incidente');
+  \Validations::isValidIncidentTypeId($id_tipo_incidente);
+  return $response->withStatus(200)->withJson($incidentTypesRepository->getIncidentType($id_tipo_incidente));
+});
+
 $app->get("/tipos-incidente", function (Request $request, Response $response, $args) use ($incidentTypesRepository)
 {
   return $response->withStatus(200)->withJson($incidentTypesRepository->getIncidentTypes());
@@ -62,7 +69,7 @@ $app->post("/incidentes", function (Request $request, Response $response, $args)
   return $response->withStatus(200)->withJson(['message' => $message, 'id_incidente' => $id_incidente]);
 });
 
-$app->get("/error_code/{id_error_code}", function (Request $request, Response $response, $args)
+$app->get("/error-code/{id_error_code}", function (Request $request, Response $response, $args)
 {
   $error_code =  $request->getAttribute('id_error_code');
   return $response->withStatus(200)->withJson(array('error_code' => $error_code, 'description' => \InvalidArgException::getDescription($error_code)));

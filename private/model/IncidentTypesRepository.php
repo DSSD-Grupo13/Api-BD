@@ -44,7 +44,7 @@ class IncidentTypesRepository extends PDORepository
     return $this->stmtUpdate->execute([$nombre, $idTipoIncidente]);
   }
 
-  public function getTipoIncidente($idTipoIncidente)
+  public function getIncidentType($idTipoIncidente)
   {
     return $this->queryToTipoIncidenteArray($this->queryList("SELECT * FROM tipoincidente where idTipoIncidente = ?", [$idTipoIncidente]))[0];
   }

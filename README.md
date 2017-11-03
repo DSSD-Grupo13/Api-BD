@@ -131,7 +131,7 @@ Donde:
 
 * `message`: contiene un texto descriptivo del resultado de la operación
 * `idIncidente`: contiene un `id` que es el identificador asignado por el sistema
-* `error_code`: este campo unicamente se incluye  cuando la respuesta `HTTP` vuelve con un `Status Code 400 Bad Request`. Es un codigo de error cuyo significado puede consultarse en el endpoint `/error_code/{:id_error_code}`
+* `error_code`: este campo unicamente se incluye  cuando la respuesta `HTTP` vuelve con un `Status Code 400 Bad Request`. Es un codigo de error cuyo significado puede consultarse en el endpoint `/error-code/{:id_error_code}`
 
 #### Ejemplo incidente creado correctamente:
 
@@ -182,9 +182,26 @@ La respuesta es un array de objetos `JSON` que contiene los datos de los inciden
 ]
 ```
 
-7. `'/error_code/{:id_error_code}'` --> Consulta de código de error
+7. `'/tipos-incidente/{:id_tipo_incidente}'` --> Consulta de tipo de incidente
 
-Se debe enviar un requerimiento `HTTP GET` a la URL `/error_code/{:id_error_code}`.
+Se debe enviar un requerimiento `HTTP GET` a la URL `/tipos-incidente/{:id_tipo_incidente}`.
+
+El parametro fecha incluido en la URL es un identificador del tipo de incidente que se quiere consutlar
+
+La respuesta es un objeto `JSON` con la siguiente estructura:
+
+    HTTP 200 OK
+
+```JSON
+{
+    "idTipoIncidente": "1",
+    "nombre": "casa"
+}
+```
+
+8. `'/error-code/{:id_error_code}'` --> Consulta de código de error
+
+Se debe enviar un requerimiento `HTTP GET` a la URL `/error-code/{:id_error_code}`.
 
 El parametro fecha incluido en la URL es un identificador del código de error que se quiere consutlar
 

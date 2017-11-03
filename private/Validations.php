@@ -33,7 +33,7 @@ class Validations
 
   private static function getIncidentTypeRepository()
   {
-      return new \TipoIncidenteRepository;
+      return new \IncidentTypesRepository;
   }
 
   private static function isBetween($value, $min, $max)
