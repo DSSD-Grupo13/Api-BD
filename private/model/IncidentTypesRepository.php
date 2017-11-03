@@ -1,5 +1,5 @@
 <?php
-class TipoIncidenteRepository extends PDORepository
+class IncidentTypesRepository extends PDORepository
 {
   private $stmtDelete;
   private $stmtCreate;
@@ -9,7 +9,7 @@ class TipoIncidenteRepository extends PDORepository
   {
     $answer = [];
     foreach ($query as &$element) {
-      $answer[] = new TipoIncidente(
+      $answer[] = new IncidentType(
         $element['idTipoIncidente'],
         $element['nombre']
       );
@@ -24,7 +24,7 @@ class TipoIncidenteRepository extends PDORepository
     $this->stmtUpdate = $this->newPreparedStmt("UPDATE tipoincidente SET nombre = ? WHERE idTipoIncidente = ?");
   }
 
-  public function getAll()
+  public function getIncidentTypes()
   {
     return $this->queryToTipoIncidenteArray($this->queryList("SELECT * FROM tipoincidente"));
   }

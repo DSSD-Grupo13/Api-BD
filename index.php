@@ -8,7 +8,8 @@ require_once './private/autoloader.php';
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-$incidentsRepository = new \IncidentsRepository();
+$incidentsRepository = new \IncidentsRepository;
+$incidentTypesRepository = new \IncidentTypesRepository;
 
 $app = new \Slim\App;
 $container = $app->getContainer();
@@ -33,6 +34,11 @@ $app->get("/incidente/{id_incidente}", function (Request $request, Response $res
 $app->get("/incidentes", function (Request $request, Response $response, $args) use ($incidentsRepository)
 {
   return $response->withStatus(200)->withJson($incidentsRepository->getIncidentes());
+});
+
+$app->get("/tipos-incidente", function (Request $request, Response $response, $args) use ($incidentTypesRepository)
+{
+  return $response->withStatus(200)->withJson($incidentTypesRepository->getIncidentTypes());
 });
 
 $app->get("/incidentes/{id_usuario}", function (Request $request, Response $response, $args) use ($incidentsRepository)

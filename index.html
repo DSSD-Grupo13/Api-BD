@@ -37,7 +37,7 @@ La respuesta es un objeto `JSON` que contiene los datos del incidente:
 
 3. `'/incidentes'` --> Retorna la lista de incidentes
 
-Se debe enviar un requerimiento `HTTP GET` a la URL `/incidente/{:id}`.
+Se debe enviar un requerimiento `HTTP GET` a la URL `/incidente`.
 
 El parametro fecha incluido en la URL debe ser el identificador del incidente que se quiere consultar
 
@@ -158,7 +158,35 @@ Donde:
     "idIncidente": ""
 }
 ```
-6. `'/error_code/{:id_error_code}'` --> Consulta de código de error
+
+6. `'/tipos-incidente'` --> Retorna la lista de tipos de incidentes
+
+Se debe enviar un requerimiento `HTTP GET` a la URL `/tipos-incidente/{:id}`.
+
+El parametro fecha incluido en la URL debe ser el identificador del incidente que se quiere consultar
+
+La respuesta es un array de objetos `JSON` que contiene los datos de los incidentes:
+
+    HTTP 200 OK
+
+```JSON
+[
+    {
+        "idTipoIncidente": "1",
+        "nombre": "casa"
+    },
+    {
+        "idTipoIncidente": "2",
+        "nombre": "vehiculo"
+    },
+    {
+        "idTipoIncidente": "3",
+        "nombre": "objeto-mueble"
+    }
+]
+```
+
+7. `'/error_code/{:id_error_code}'` --> Consulta de código de error
 
 Se debe enviar un requerimiento `HTTP GET` a la URL `/error_code/{:id_error_code}`.
 
