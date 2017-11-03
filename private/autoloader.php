@@ -1,5 +1,4 @@
 <?php
-require_once './Slim/autoloader.php';
 require_once 'private/model/PDORepository.php';
 
 require_once 'private/model/Incidente.php';

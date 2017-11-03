@@ -15,7 +15,7 @@ $app->get('/', function () use ($app) {
   $res->finalize();
 });
 
-$app->post('/solicitar-presupuesto', function () use ($app) {
+$app->get('/incidente/{:id}', function () use ($app) {
   try {
     $productos = json_decode($app->request->getBody());
     $res = $app->response;
