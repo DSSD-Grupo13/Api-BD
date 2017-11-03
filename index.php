@@ -26,11 +26,11 @@ $app->get("/", function (Request $request, Response $response)
 
 $app->get("/incidente/{id_incidente}", function (Request $request, Response $response, $args) use ($incidentsRepository)
 {
-  $id_incidente =  $request->getAttribute('id_incidente');
-  if (is_null($id_incidente))
+  $incident_id =  $request->getAttribute('id_incidente');
+  if (is_null($incident_id))
     throw new \Exception('Parametro id_incidente no seteado');
 
-  return $response->withStatus(200)->withJson($incidentsRepository->getIncidente($id_incidente));
+  return $response->withStatus(200)->withJson($incidentsRepository->getIncidente($incident_id));
 });
 
 $app->get("/incidentes", function (Request $request, Response $response, $args) use ($incidentsRepository)
@@ -64,16 +64,16 @@ $app->get("/estados-incidente", function (Request $request, Response $response, 
 
 $app->get("/incidentes/{id_usuario}", function (Request $request, Response $response, $args) use ($incidentsRepository)
 {
-  $id_usuario =  $request->getAttribute('id_usuario');
-  \Validations::isValidUserId($id_usuario);
-  return $response->withStatus(200)->withJson($incidentsRepository->getIncidentesUsuario($id_usuario));
+  $user_id =  $request->getAttribute('id_usuario');
+  \Validations::isValidUserId($user_id);
+  return $response->withStatus(200)->withJson($incidentsRepository->getIncidentesUsuario($user_id));
 });
 
 $app->get("/usuarios/{id_usuario}", function (Request $request, Response $response, $args) use ($usersRepository)
 {
-  $id_usuario =  $request->getAttribute('id_usuario');
-  \Validations::isValidUserId($id_usuario);
-  return $response->withStatus(200)->withJson($usersRepository->getUser($id_usuario));
+  $user_id =  $request->getAttribute('id_usuario');
+  \Validations::isValidUserId($user_id);
+  return $response->withStatus(200)->withJson($usersRepository->getUser($user_id));
 });
 
 $app->get("/usuarios", function (Request $request, Response $response, $args) use ($usersRepository)
@@ -83,16 +83,20 @@ $app->get("/usuarios", function (Request $request, Response $response, $args) us
 
 $app->post("/incidentes", function (Request $request, Response $response, $args) use ($incidentsRepository)
 {
-  $idUsuario = $request->getParsedBodyParam('idUsuario');
-  $idTipoIncidente = $request->getParsedBodyParam('idTipoIncidente');
-  $descripcion = $request->getParsedBodyParam('descripcion');
+  $user_id = $request->getParsedBodyParam('idUsuario');
+  $incident_type_id = $request->getParsedBodyParam('idTipoIncidente');
+  $description = $request->getParsedBodyParam('descripcion');
 
-  \Validations::isValidIncidentTypeId($idTipoIncidente);
-  \Validations::isValidUserId($idUsuario);
+  \Validations::isValidIncidentTypeId($incident_type_id);
+  \Validations::isValidUserId($user_id);
 
-  $id_incidente = $incidentsRepository->newIncident($idUsuario, $descripcion, $idTipoIncidente);
-  $message = "Se confirmó el expediente # $id_incidente";
-  return $response->withStatus(200)->withJson(['message' => $message, 'id_incidente' => $id_incidente]);
+  $incident_id = $incidentsRepository->newIncident($user_id, $description, $incident_type_id);
+  $bonita = new Bonita('ortu.agustin', 'bpm');
+  $process_id = $bonita->obtenerIdProceso();
+  $case_id = $bonita->instanciarProceso($process_id);
+ $bonita->setearVariable($case_id, 'idIncidente', 'java.lang.Integer', $incident_id);
+  $message = "Se confirmó el expediente # $incident_id";
+  return $response->withStatus(200)->withJson(['message' => $message, 'id_incidente' => $incident_id, 'case_id' => $case_id]);
 });
 
 $app->get("/error-code/{id_error_code}", function (Request $request, Response $response, $args)
