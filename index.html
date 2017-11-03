@@ -37,14 +37,14 @@
 
       `Nota: El directorio /var/www/html/api-incidentes.com debe existir`
 
-    2. Ejecutar los comandos en una terminal:
+    2. Ejecutar los comandos en una terminal (los dos primeros pueden no ser necesarios si ya se ejecutaron alguna vez):
 
       ```
-      a2enmod rewrite
+      sudo a2enmod rewrite
 
-      a2dissite 000-default.conf
+      sudo a2dissite 000-default.conf
 
-      a2ensite api-incidentes.com
+      sudo a2ensite api-incidentes.com
       ```
 
     3. Agregar en hosts: `/etc/hosts`
