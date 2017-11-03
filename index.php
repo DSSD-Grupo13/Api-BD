@@ -10,6 +10,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 $incidentsRepository = new \IncidentsRepository;
 $incidentTypesRepository = new \IncidentTypesRepository;
+$incidetStatesRepository = new \IncidentStatesRepository;
 
 $app = new \Slim\App;
 $container = $app->getContainer();
@@ -46,6 +47,18 @@ $app->get("/tipos-incidente/{id_tipo_incidente}", function (Request $request, Re
 $app->get("/tipos-incidente", function (Request $request, Response $response, $args) use ($incidentTypesRepository)
 {
   return $response->withStatus(200)->withJson($incidentTypesRepository->getIncidentTypes());
+});
+
+$app->get("/estados-incidente/{id_estado_incidente}", function (Request $request, Response $response, $args) use ($incidetStatesRepository)
+{
+  $id_estado_incidente =  $request->getAttribute('id_estado_incidente');
+  \Validations::isValidIncidentStateId($id_estado_incidente);
+  return $response->withStatus(200)->withJson($incidetStatesRepository->getIncidentState($id_estado_incidente));
+});
+
+$app->get("/estados-incidente", function (Request $request, Response $response, $args) use ($incidetStatesRepository)
+{
+  return $response->withStatus(200)->withJson($incidetStatesRepository->getIncidentStates());
 });
 
 $app->get("/incidentes/{id_usuario}", function (Request $request, Response $response, $args) use ($incidentsRepository)

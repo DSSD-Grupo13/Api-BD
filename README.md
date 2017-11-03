@@ -10,11 +10,9 @@
 
 Un requerimiento `HTTP GET` a la URL `'/'` retorna este documento
 
-2. `'/incidente/{:id}'` --> Retorna los datos de un incidente
+2. `'/incidente/{:id_incidente}'` --> Retorna los datos de un incidente
 
 Se debe enviar un requerimiento `HTTP GET` a la URL `/incidente/{:id}`.
-
-El parametro fecha incluido en la URL debe ser el identificador del incidente que se quiere consultar
 
 La respuesta es un objeto `JSON` que contiene los datos del incidente:
 
@@ -34,8 +32,6 @@ La respuesta es un objeto `JSON` que contiene los datos del incidente:
 3. `'/incidentes'` --> Retorna la lista de incidentes
 
 Se debe enviar un requerimiento `HTTP GET` a la URL `/incidente`.
-
-El parametro fecha incluido en la URL debe ser el identificador del incidente que se quiere consultar
 
 La respuesta es un array de objetos `JSON` que contiene los datos de los incidentes:
 
@@ -66,7 +62,7 @@ La respuesta es un array de objetos `JSON` que contiene los datos de los inciden
 
 Se debe enviar un requerimiento `HTTP GET` a la URL `/incidentes/{:id_usuario}`.
 
-El parametro fecha incluido en la URL debe ser el identificador del usuario que se quiere consultar
+El parametro incluido en la URL debe ser el identificador del usuario que se quiere consultar
 
 La respuesta es un array de objetos `JSON` que contiene los datos de los incidentes:
 
@@ -155,13 +151,11 @@ Donde:
 }
 ```
 
-6. `'/tipos-incidente'` --> Retorna la lista de tipos de incidentes
+6. `'/tipos-incidente'` --> Retorna la lista de tipos de incidente
 
-Se debe enviar un requerimiento `HTTP GET` a la URL `/tipos-incidente/{:id}`.
+Se debe enviar un requerimiento `HTTP GET` a la URL `/tipos-incidente`.
 
-El parametro fecha incluido en la URL debe ser el identificador del incidente que se quiere consultar
-
-La respuesta es un array de objetos `JSON` que contiene los datos de los incidentes:
+La respuesta es un array de objetos `JSON` que contiene los datos de los diferentes tipso de incidents:
 
     HTTP 200 OK
 
@@ -186,7 +180,7 @@ La respuesta es un array de objetos `JSON` que contiene los datos de los inciden
 
 Se debe enviar un requerimiento `HTTP GET` a la URL `/tipos-incidente/{:id_tipo_incidente}`.
 
-El parametro fecha incluido en la URL es un identificador del tipo de incidente que se quiere consutlar
+El parametro incluido en la URL es un identificador del tipo de incidente que se quiere consutlar
 
 La respuesta es un objeto `JSON` con la siguiente estructura:
 
@@ -199,11 +193,49 @@ La respuesta es un objeto `JSON` con la siguiente estructura:
 }
 ```
 
-8. `'/error-code/{:id_error_code}'` --> Consulta de código de error
+8. `'/estados-incidente'` --> Retorna la lista de estados de incidente
+
+Se debe enviar un requerimiento `HTTP GET` a la URL `/estados-incidente`.
+
+La respuesta es un array de objetos `JSON` que contiene los datos de los diferentes estados de los incidentes:
+
+    HTTP 200 OK
+
+```JSON
+[
+    {
+        "idEstado": "1",
+        "nombre": "pendiente"
+    },
+    {
+        "idEstado": "2",
+        "nombre": "en-presupuesto"
+    }
+]
+```
+
+9. `'/estados-incidente/{:id_estado_incidente}'` --> Consulta de estado de incidente
+
+Se debe enviar un requerimiento `HTTP GET` a la URL `/tipos-incidente/{:id_tipo_incidente}`.
+
+El parametro incluido en la URL es un identificador del estado de incidente que se quiere consutlar
+
+La respuesta es un objeto `JSON` con la siguiente estructura:
+
+    HTTP 200 OK
+
+```JSON
+{
+    "idEstado": "1",
+    "nombre": "pendiente"
+}
+```
+
+10. `'/error-code/{:id_error_code}'` --> Consulta de código de error
 
 Se debe enviar un requerimiento `HTTP GET` a la URL `/error-code/{:id_error_code}`.
 
-El parametro fecha incluido en la URL es un identificador del código de error que se quiere consutlar
+El parametro incluido en la URL es un identificador del código de error que se quiere consutlar
 
 La respuesta es un objeto `JSON` con la siguiente estructura:
 
