@@ -78,7 +78,28 @@ $app->get("/usuarios/{id_usuario}", function (Request $request, Response $respon
 
 $app->get("/usuarios", function (Request $request, Response $response, $args) use ($usersRepository)
 {
-  return $response->withStatus(200)->withJson($usersRepository->getUsers());
+    return $response->withStatus(200)->withJson($usersRepository->getUsers());
+});
+
+$app->post("/usuarios", function (Request $request, Response $response, $args) use ($usersRepository)
+{
+  $nombreUsuario = $request->getParsedBodyParam('nombreUsuario');
+  $mail = $request->getParsedBodyParam('mail');
+  $contrasena = $request->getParsedBodyParam('contrasena');
+  $nombre = $request->getParsedBodyParam('nombre');
+  $apellido = $request->getParsedBodyParam('apellido');
+  $dni = $request->getParsedBodyParam('dni');
+
+  \Validations::IsNotEmpty($nombreUsuario, 'nombreUsuario');
+  \Validations::IsNotEmpty($mail, 'mail');
+  \Validations::IsNotEmpty($contrasena, 'contrasena');
+  \Validations::IsNotEmpty($nombre, 'nombre');
+  \Validations::IsNotEmpty($apellido, 'apellido');
+  \Validations::IsNotEmpty($dni, 'dni');
+  \Validations::userNameExists($nombreUsuario);
+
+  $usersRepository->create($nombreUsuario, $mail, $contrasena, $nombre, $apellido, $dni);
+  return $response->withStatus(200)->withJson(['message' => 'usuario creado correctamente']);
 });
 
 $app->post("/incidentes", function (Request $request, Response $response, $args) use ($incidentsRepository)

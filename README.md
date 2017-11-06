@@ -97,8 +97,6 @@ La solicitud debe incluir en el `body` un objeto `JSON` en donde se indiquen los
 
 Ejemplo:
 
-    HTTP 200 OK
-
 ```JSON
 {
   "idUsuario": "1",
@@ -292,8 +290,45 @@ La respuesta es un objeto `JSON` con la siguiente estructura:
     "apellido": "lopez"
 }
 ```
+12. `'/usuarios'` --> Registrar usuario
 
-12. `'/error-code/{:id_error_code}'` --> Consulta de código de error
+Se debe enviar un requerimiento `HTTP POST` a la URL `/usuarios`.
+
+La solicitud debe incluir en el `body` un objeto `JSON` en donde se indiquen los siguientes parametros: nombreUsuario, mail, contrasena, nombre, apellido, DNI
+
+Ejemplo:
+
+```JSON
+{
+  "nombreUsuario": "ortu.agustin",
+  "mail": "ortu.agustin@gmail.com",
+  "contrasena": "bpm",
+  "nombre": "Agustin",
+  "apellido": "Ortu",
+  "DNI": "37058719"
+}
+```
+Los cuatro parametros serán validados:
+
+* Todos los campos son obligatorios
+* Se validará que el nombre de usuario no esté en uso
+
+  Esto devuelve una respuesta en donde el `body` es un objeto `JSON` con la siguiente estructura:
+
+    HTTP 200 OK
+
+```JSON
+{
+    "error_code": "integer",
+    "message": "string"
+}
+```
+Donde:
+
+* `message`: contiene un texto descriptivo del resultado de la operación
+* `error_code`: este campo unicamente se incluye  cuando la respuesta `HTTP` vuelve con un `Status Code 400 Bad Request`. Es un codigo de error cuyo significado puede consultarse en el endpoint `/error-code/{:id_error_code}`
+
+13. `'/error-code/{:id_error_code}'` --> Consulta de código de error
 
 Se debe enviar un requerimiento `HTTP GET` a la URL `/error-code/{:id_error_code}`.
 

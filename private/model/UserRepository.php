@@ -8,7 +8,7 @@ class UserRepository extends PDORepository
   {
     $this->stmtDelete = $this->newPreparedStmt("DELETE FROM usuario WHERE idUsuario = ?");
     $this->stmtCreate = $this->newPreparedStmt("INSERT INTO usuario (nombreUsuario, mail, contrasena, nombre, apellido, dni)
-                                                                                 VALUES (?, ?, ?, ?, ?, ?, ?)");
+                                                                                 VALUES (?, ?, ?, ?, ?, ?)");
   }
 
   public function getUsers()
