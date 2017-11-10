@@ -114,8 +114,7 @@ $app->post("/incidentes", function (Request $request, Response $response, $args)
   $incident_id = $incidentsRepository->newIncident($user_id, $description, $incident_type_id);
   $bonita = new Bonita('ortu.agustin', 'bpm');
   $process_id = $bonita->obtenerIdProceso();
-  $case_id = $bonita->instanciarProceso($process_id);
- $bonita->setearVariable($case_id, 'idIncidente', 'java.lang.Integer', $incident_id);
+  $case_id = $bonita->instanciarProcesoConVariable($process_id, 'idIncidente', $incident_id);
   $message = "Se confirmó el expediente # $incident_id";
   return $response->withStatus(200)->withJson(['message' => $message, 'id_incidente' => $incident_id, 'case_id' => $case_id]);
 });

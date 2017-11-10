@@ -64,6 +64,31 @@ class Bonita
     }
   }
 
+  public function instanciarProcesoConVariable($idProceso, $nombreVariable, $valorVariable)
+  {
+    $token = $this->login();
+    $variables = array(['name' => $nombreVariable, 'value' => $valorVariable]);
+    $json = json_encode(['processDefinitionId' => $idProceso, 'variables' => $variables]);
+    try {
+      $response = $this->createClient()->request(
+        'POST',
+        'API/bpm/case/',
+        [
+          'headers' => [
+            'X-Bonita-API-Token' => $token->getValue()
+          ],
+          'body' => $json
+        ]
+      );
+
+      $body = $response->getBody();
+      return json_decode($body)->{'id'};
+    }
+    finally {
+      $this->logout();
+    }
+  }
+
   public function obtenerIdProceso()
   {
     $token = $this->login();
