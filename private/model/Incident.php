@@ -7,8 +7,9 @@ class Incident implements \JsonSerializable
   public $descripcion;
   public $estado;
   public $fechaInicio;
+  public $objetos;
 
-  public function __construct($idIncidente, $idUsuario, $idTipoIncidente, $descripcion, $estado, $fechaInicio)
+  public function __construct($idIncidente, $idUsuario, $idTipoIncidente, $descripcion, $estado, $fechaInicio, $objetos)
   {
     $this->idIncidente = $idIncidente;
     $this->idUsuario = $idUsuario;
@@ -16,36 +17,7 @@ class Incident implements \JsonSerializable
     $this->descripcion = $descripcion;
     $this->estado = $estado;
     $this->fechaInicio = $fechaInicio;
-  }
-
-  public function getId()
-  {
-    return $this->idIncidente;
-  }
-
-  public function getidUsuario()
-  {
-    return $this->idUsuario;
-  }
-
-  public function getIdTipoIncidente()
-  {
-    return $this->idTipoIncidente;
-  }
-
-  public function getDescripcion()
-  {
-    return $this->descripcion;
-  }
-
-  public function getEstado()
-  {
-    return $this->estado;
-  }
-
-  public function getFechaInicio()
-  {
-    return $this->fechaInicio;
+    $this->objetos = $objetos;
   }
 
   public function jsonSerialize()
@@ -53,3 +25,23 @@ class Incident implements \JsonSerializable
     return get_object_vars($this);
   }
 }
+
+class IncidentObject implements \JsonSerializable
+{
+  public $nombre;
+  public $cantidad;
+  public $descripcion;
+
+  public function __construct($nombre, $cantidad, $descripcion)
+  {
+    $this->nombre = $nombre;
+    $this->cantidad = $cantidad;
+    $this->descripcion = $descripcion;
+  }
+
+  public function jsonSerialize()
+  {
+    return get_object_vars($this);
+  }
+}
+

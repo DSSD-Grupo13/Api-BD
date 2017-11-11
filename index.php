@@ -107,11 +107,12 @@ $app->post("/incidentes", function (Request $request, Response $response, $args)
   $user_id = $request->getParsedBodyParam('idUsuario');
   $incident_type_id = $request->getParsedBodyParam('idTipoIncidente');
   $description = $request->getParsedBodyParam('descripcion');
+  $objects = $request->getParsedBodyParam('objetos');
 
   \Validations::isValidIncidentTypeId($incident_type_id);
   \Validations::isValidUserId($user_id);
 
-  $incident_id = $incidentsRepository->newIncident($user_id, $description, $incident_type_id);
+  $incident_id = $incidentsRepository->newIncident($user_id, $description, $incident_type_id, $objects);
   $bonita = new Bonita('ortu.agustin', 'bpm');
   $process_id = $bonita->obtenerIdProceso();
   $case_id = $bonita->instanciarProcesoConVariable($process_id, 'idIncidente', $incident_id);

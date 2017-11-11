@@ -3,24 +3,45 @@ class IncidentsRepository extends PDORepository
 {
   private static $mysql_datetime_format = 'Y-m-d';
   private static $date_only_format = 'd-m-Y';
-  private $stmtDelete;
+  private $stmtDeleteIncidente;
+  private $stmtDeleteObjetoIncidente;
   private $stmtCreate;
   private $stmtUpdateState;
+  private $stmtNewIncidentObject;
 
   public function __construct()
   {
     $this->stmtCreate = $this->newPreparedStmt("INSERT INTO incidente (descripcion, idTipoIncidente, idUsuario, fechaInicio, fechaFin, idEstado)
                                                                                  VALUES (?, ?, ?, NOW(), NOW(), ?) ");
     $this->stmtUpdateState = $this->newPreparedStmt("UPDATE incidente SET idEstado = ? WHERE idIncidente = ?");
-    $this->stmtDelete = $this->newPreparedStmt("DELETE FROM inciente WHERE idIncidente = ?");
+    $this->stmtDeleteIncidente = $this->newPreparedStmt("DELETE FROM inciente WHERE idIncidente = ?");
+    $this->stmtDeleteObjetoIncidente = $this->newPreparedStmt("DELETE FROM objetoIncidente WHERE idIncidente = ?");
+    $this->stmtNewIncidentObject = $this->newPreparedStmt("INSERT INTO objetoIncidente (idIncidente, nombre, cantidad, descripcion)
+                                                                                                     VALUES (?, ?, ?, ?)");
   }
 
-  public function newIncident($idUsuario, $descripcion, $tipo_incidente)
+  public function obtenerObjetosIncidente($idIncidente)
+  {
+    $answer = [];
+    $query = $this->queryList("SELECT * FROM objetoIncidente WHERE idIncidente = ?", [$idIncidente]);
+    foreach ($query as &$element) {
+      $answer[] = new IncidentObject(
+        $element['nombre'],
+        $element['cantidad'],
+        $element['descripcion']
+      );
+    };
+    return $answer;
+  }
+
+  public function newIncident($idUsuario, $descripcion, $tipo_incidente, $objects)
   {
     $this->stmtCreate->execute([$descripcion, $tipo_incidente, $idUsuario, '1']);
     $qry = $this->newPreparedStmt("SELECT idincidente FROM incidente ORDER BY idincidente DESC LIMIT 1");
     $qry->execute();
-    return $qry->fetchColumn();
+    $id = $qry->fetchColumn();
+    $this->saveIncidentObjects($id, $objects);
+    return $id;
   }
 
   public function getIncidentes()
@@ -40,12 +61,20 @@ class IncidentsRepository extends PDORepository
 
   public function delete($idIncidente)
   {
-    return $this->stmtDelete->execute([$idIncidente]);
+    $this->stmtDeleteObjetoIncidente->execute([$idIncidente]);
+    return $this->stmtDeleteIncidente->execute([$idIncidente]);
   }
 
   public function updateState($idEstado, $idIncidente)
   {
     return $this->stmtUpdateState->execute([$idEstado, $idIncidente]);
+  }
+
+  private function saveIncidentObjects($idIncidente, $objects)
+  {
+    foreach ($objects as &$each) {
+      $this->stmtNewIncidentObject->execute([$idIncidente, $each['nombre'], $each['cantidad'], $each['descripcion']]);
+    }
   }
 
   private function queryToIncidenteArray($query)
@@ -58,7 +87,8 @@ class IncidentsRepository extends PDORepository
         $element['idTipoIncidente'],
         $element['descripcion'],
         $element['idEstado'],
-        $this->mysqldate_to_datetime($element['fechaInicio'])
+        $this->mysqldate_to_datetime($element['fechaInicio']),
+        $this->obtenerObjetosIncidente($element['idIncidente'])
       );
     }
     return $answer;

@@ -97,7 +97,7 @@ La respuesta es un array de objetos `JSON` que contiene los datos de los inciden
 
 Se debe enviar un requerimiento `HTTP POST` a la URL `/incidentes`.
 
-La solicitud debe incluir en el `body` un objeto `JSON` en donde se indiquen los siguientes parametros: IdUsuario, IdTipoIncidente, Fecha, Descripcion
+La solicitud debe incluir en el `body` un objeto `JSON` en donde se indiquen los siguientes parametros: IdUsuario, IdTipoIncidente, Descripcion y los Objetos a Indemnizar
 
 Ejemplo:
 
@@ -105,7 +105,14 @@ Ejemplo:
 {
   "idUsuario": "1",
   "idTipoIncidente": "2",
-  "descripcion": "choque"
+  "descripcion": "granizo",
+  "objetos": [
+    {
+      "nombre": "parabrisas",
+      "cantidad": "1",
+      "descripcion": "el vidrio fue estallado por el granizo"
+    }
+  ]
 }
 ```
 Los cuatro parametros serán validados:
@@ -113,6 +120,10 @@ Los cuatro parametros serán validados:
 * `IdUsuario` debe ser el de un usuario registrado en el sistema
 * `idTipoIncidente` debe ser alguno de los identificadores de tipo de incidentes
 * `descripcion`: string
+* `objetos`: es un array con los objetos a indemnizar. Para cada elemento se debe consignar:
+  * `nombre`: nombre del objeto
+  * `cantidad`: cantidad de objetos requerida
+  * `descripcion`: descripcion del incidente sobre el objeto
 
   Esto devuelve una respuesta en donde el `body` es un objeto `JSON` con la siguiente estructura:
 
@@ -120,15 +131,15 @@ Los cuatro parametros serán validados:
 
 ```JSON
 {
-    "error_code": "integer",
-    "message": "string",
-    "idIncidente": "integer"
+  "idIncidente": "integer",
+  "message": "string",
+  "error_code": "integer"
 }
 ```
 Donde:
 
-* `message`: contiene un texto descriptivo del resultado de la operación
 * `idIncidente`: contiene un `id` que es el identificador asignado por el sistema
+* `message`: contiene un texto descriptivo del resultado de la operación
 * `error_code`: este campo unicamente se incluye  cuando la respuesta `HTTP` vuelve con un `Status Code 400 Bad Request`. Es un codigo de error cuyo significado puede consultarse en el endpoint `/error-code/{:id_error_code}`
 
 #### Ejemplo incidente creado correctamente:
