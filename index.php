@@ -8,10 +8,10 @@ require_once './private/autoloader.php';
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-$incidentsRepository = new \IncidentsRepository;
 $incidentTypesRepository = new \IncidentTypesRepository;
 $incidetStatesRepository = new \IncidentStatesRepository;
 $usersRepository = new \UserRepository;
+$incidentsRepository = new \IncidentsRepository($incidentTypesRepository, $incidetStatesRepository, $usersRepository);
 
 $app = new \Slim\App;
 $container = $app->getContainer();

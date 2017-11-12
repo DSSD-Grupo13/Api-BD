@@ -1,23 +1,13 @@
 <?php
 class IncidentType implements \JsonSerializable
 {
-  private $idTipoIncidente;
+  private $id;
   private $nombre;
 
-  public function __construct( $idTipoIncidente, $nombre)
+  public function __construct( $id, $nombre)
   {
-    $this->idTipoIncidente = $idTipoIncidente;
+    $this->id = $id;
     $this->nombre = $nombre;
-  }
-
-  public function getId()
-  {
-    return $this->idTipoIncidente;
-  }
-
-  public function getNombre()
-  {
-    return $this->nombre;
   }
 
   public function jsonSerialize()

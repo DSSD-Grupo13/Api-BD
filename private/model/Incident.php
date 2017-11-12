@@ -1,22 +1,22 @@
 <?php
 class Incident implements \JsonSerializable
 {
-  public $idIncidente;
-  public $idUsuario;
-  public $idTipoIncidente;
-  public $descripcion;
-  public $estado;
-  public $fechaInicio;
-  public $objetos;
+  private $id;
+  private $descripcion;
+  private $cliente;
+  private $tipo;
+  private $estado;
+  private $fecha;
+  private $objetos;
 
-  public function __construct($idIncidente, $idUsuario, $idTipoIncidente, $descripcion, $estado, $fechaInicio, $objetos)
+  public function __construct($id, $descripcion, $tipo, $estado, $cliente, $fecha, $objetos)
   {
-    $this->idIncidente = $idIncidente;
-    $this->idUsuario = $idUsuario;
-    $this->idTipoIncidente = $idTipoIncidente;
+    $this->id = $id;
+    $this->cliente = $cliente;
+    $this->tipo = $tipo;
     $this->descripcion = $descripcion;
     $this->estado = $estado;
-    $this->fechaInicio = $fechaInicio;
+    $this->fecha = $fecha;
     $this->objetos = $objetos;
   }
 
@@ -28,9 +28,9 @@ class Incident implements \JsonSerializable
 
 class IncidentObject implements \JsonSerializable
 {
-  public $nombre;
-  public $cantidad;
-  public $descripcion;
+  private $nombre;
+  private $cantidad;
+  private $descripcion;
 
   public function __construct($nombre, $cantidad, $descripcion)
   {

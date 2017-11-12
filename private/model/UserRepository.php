@@ -36,6 +36,11 @@ class UserRepository extends PDORepository
     return $this->queryToUserArray($this->queryList("SELECT * FROM usuario WHERE idUsuario = ?", [$idUsuario]))[0];
   }
 
+  public function getCostumer($idUsuario)
+  {
+    return $this->queryToCostumerArray($this->queryList("SELECT * FROM usuario WHERE idUsuario = ?", [$idUsuario]))[0];
+  }
+
   private function queryUser($nombreUsuario, $contrasena)
   {
     return $this->queryToUserArray($this->queryList("SELECT * FROM usuario WHERE nombreUsuario = ? AND contrasena = ?", [$nombreUsuario, $contrasena]));
@@ -71,8 +76,21 @@ class UserRepository extends PDORepository
         $element['contrasena'],
         $element['mail'],
         $element['dni'],
-        $element['nombre'],
-        $element['apellido']
+        $element['apellido'],
+        $element['nombre']
+      );
+    }
+    return $answer;
+  }
+
+  private function queryToCostumerArray($query)
+  {
+    $answer = [];
+    foreach ($query as &$element) {
+      $answer[] = new Costumer(
+        $element['idUsuario'],
+        $element['apellido'],
+        $element['nombre']
       );
     }
     return $answer;

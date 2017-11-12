@@ -1,23 +1,13 @@
 <?php
 class IncidentState implements \JsonSerializable
 {
-  private $idEstado;
+  private $id;
   private $nombre;
 
-  public function __construct($idEstado, $nombre)
+  public function __construct($id, $nombre)
   {
-    $this->idEstado = $idEstado;
+    $this->id = $id;
     $this->nombre = $nombre;
-  }
-
-  public function getId()
-  {
-    return $this->idEstado;
-  }
-
-  public function getNombre()
-  {
-    return $this->nombre;
   }
 
   public function jsonSerialize()

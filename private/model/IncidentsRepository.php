@@ -8,9 +8,15 @@ class IncidentsRepository extends PDORepository
   private $stmtCreate;
   private $stmtUpdateState;
   private $stmtNewIncidentObject;
+  private $typesRepository;
+  private $statesRepository;
+  private $userRepository;
 
-  public function __construct()
+  public function __construct($typesRepository, $statesRepository, $userRepository)
   {
+    $this->typesRepository = $typesRepository;
+    $this->statesRepository = $statesRepository;
+    $this->userRepository = $userRepository;
     $this->stmtCreate = $this->newPreparedStmt("INSERT INTO incidente (descripcion, idTipoIncidente, idUsuario, fechaInicio, fechaFin, idEstado)
                                                                                  VALUES (?, ?, ?, NOW(), NOW(), ?) ");
     $this->stmtUpdateState = $this->newPreparedStmt("UPDATE incidente SET idEstado = ? WHERE idIncidente = ?");
@@ -83,10 +89,10 @@ class IncidentsRepository extends PDORepository
     foreach ($query as &$element) {
       $answer[] = new Incident(
         $element['idIncidente'],
-        $element['idUsuario'],
-        $element['idTipoIncidente'],
         $element['descripcion'],
-        $element['idEstado'],
+        $this->typesRepository->getIncidentType($element['idTipoIncidente']),
+        $this->statesRepository->getIncidentState($element['idEstado']),
+        $this->userRepository->getCostumer($element['idUsuario']),
         $this->mysqldate_to_datetime($element['fechaInicio']),
         $this->obtenerObjetosIncidente($element['idIncidente'])
       );
