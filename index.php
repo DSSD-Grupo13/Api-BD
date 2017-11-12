@@ -107,7 +107,7 @@ $app->post("/incidentes", function (Request $request, Response $response, $args)
   $user_id = $request->getParsedBodyParam('idUsuario');
   $incident_type_id = $request->getParsedBodyParam('idTipoIncidente');
   $description = $request->getParsedBodyParam('descripcion');
-  $objects = $request->getParsedBodyParam('objetos');
+  $objects = $request->getParsedBodyParam('objetos', []);
 
   \Validations::isValidIncidentTypeId($incident_type_id);
   \Validations::isValidUserId($user_id);
