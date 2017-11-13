@@ -30,55 +30,55 @@ $app->get("/incidente/{id_incidente}", function (Request $request, Response $res
   if (is_null($incident_id))
     throw new \Exception('Parametro id_incidente no seteado');
 
-  return $response->withStatus(200)->withJson($incidentsRepository->getIncidente($incident_id));
+  return $response->withJson($incidentsRepository->getIncidente($incident_id), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
 $app->get("/incidentes", function (Request $request, Response $response, $args) use ($incidentsRepository)
 {
-  return $response->withStatus(200)->withJson($incidentsRepository->getIncidentes());
+  return $response->withJson($incidentsRepository->getIncidentes(), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
 $app->get("/tipos-incidente/{id_tipo_incidente}", function (Request $request, Response $response, $args) use ($incidentTypesRepository)
 {
   $id_tipo_incidente =  $request->getAttribute('id_tipo_incidente');
   \Validations::isValidIncidentTypeId($id_tipo_incidente);
-  return $response->withStatus(200)->withJson($incidentTypesRepository->getIncidentType($id_tipo_incidente));
+  return $response->withJson($incidentTypesRepository->getIncidentType($id_tipo_incidente), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
 $app->get("/tipos-incidente", function (Request $request, Response $response, $args) use ($incidentTypesRepository)
 {
-  return $response->withStatus(200)->withJson($incidentTypesRepository->getIncidentTypes());
+  return $response->withJson($incidentTypesRepository->getIncidentTypes(), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
 $app->get("/estados-incidente/{id_estado_incidente}", function (Request $request, Response $response, $args) use ($incidetStatesRepository)
 {
   $id_estado_incidente =  $request->getAttribute('id_estado_incidente');
   \Validations::isValidIncidentStateId($id_estado_incidente);
-  return $response->withStatus(200)->withJson($incidetStatesRepository->getIncidentState($id_estado_incidente));
+  return $response->withJson($incidetStatesRepository->getIncidentState($id_estado_incidente), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
 $app->get("/estados-incidente", function (Request $request, Response $response, $args) use ($incidetStatesRepository)
 {
-  return $response->withStatus(200)->withJson($incidetStatesRepository->getIncidentStates());
+  return $response->withJson($incidetStatesRepository->getIncidentStates(), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
 $app->get("/incidentes/{id_usuario}", function (Request $request, Response $response, $args) use ($incidentsRepository)
 {
   $user_id =  $request->getAttribute('id_usuario');
   \Validations::isValidUserId($user_id);
-  return $response->withStatus(200)->withJson($incidentsRepository->getIncidentesUsuario($user_id));
+  return $response->withJson($incidentsRepository->getIncidentesUsuario($user_id), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
 $app->get("/usuarios/{id_usuario}", function (Request $request, Response $response, $args) use ($usersRepository)
 {
   $user_id =  $request->getAttribute('id_usuario');
   \Validations::isValidUserId($user_id);
-  return $response->withStatus(200)->withJson($usersRepository->getUser($user_id));
+  return $response->withJson($usersRepository->getUser($user_id), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
 $app->get("/usuarios", function (Request $request, Response $response, $args) use ($usersRepository)
 {
-    return $response->withStatus(200)->withJson($usersRepository->getUsers());
+    return $response->withJson($usersRepository->getUsers(), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
 $app->post("/usuarios", function (Request $request, Response $response, $args) use ($usersRepository)
@@ -99,7 +99,7 @@ $app->post("/usuarios", function (Request $request, Response $response, $args) u
   \Validations::userNameExists($nombreUsuario);
 
   $usersRepository->create($nombreUsuario, $mail, $contrasena, $nombre, $apellido, $dni);
-  return $response->withStatus(200)->withJson(['message' => 'usuario creado correctamente']);
+  return $response->withJson(['message' => 'usuario creado correctamente'], 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
 $app->post("/incidentes", function (Request $request, Response $response, $args) use ($incidentsRepository)
@@ -117,13 +117,13 @@ $app->post("/incidentes", function (Request $request, Response $response, $args)
   $process_id = $bonita->obtenerIdProceso();
   $case_id = $bonita->instanciarProcesoConVariable($process_id, 'idIncidente', $incident_id);
   $message = "Se confirmó el expediente # $incident_id";
-  return $response->withStatus(200)->withJson(['message' => $message, 'id_incidente' => $incident_id, 'case_id' => $case_id]);
+  return $response->withJson(['message' => $message, 'id_incidente' => $incident_id, 'case_id' => $case_id], 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
 $app->get("/error-code/{id_error_code}", function (Request $request, Response $response, $args)
 {
   $error_code =  $request->getAttribute('id_error_code');
-  return $response->withStatus(200)->withJson(array('error_code' => $error_code, 'description' => \InvalidArgException::getDescription($error_code)));
+  return $response->withJson(['error_code' => $error_code, 'description' => \InvalidArgException::getDescription($error_code)], 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
 $app->run();

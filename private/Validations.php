@@ -7,6 +7,7 @@ class InvalidArgException extends Exception
   const INVALID_INCIDENT_TYPE = 4;
   const INVALID_INCIDENT_STATE = 5;
   const USERNAME_EXISTS = 6;
+  const EMPTY_ARG = 7;
 
   private static $descriptions = [
     self::INVALID_DATE_FORMAT => 'Formato de fecha inválido, usar dd-mm-aaaa. Ejemplo <25-10-2017>',
