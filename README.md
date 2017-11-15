@@ -339,7 +339,24 @@ Donde:
 * `message`: contiene un texto descriptivo del resultado de la operación
 * `error_code`: este campo unicamente se incluye  cuando la respuesta `HTTP` vuelve con un `Status Code 400 Bad Request`. Es un codigo de error cuyo significado puede consultarse en el endpoint `/error-code/{:id_error_code}`
 
-13. `'/error-code/{:id_error_code}'` --> Consulta de código de error
+13. `'/actualizar-tipo-incidente/'` --> Actualizar tipo de incidente
+
+Se debe enviar un requerimiento `HTTP POST` a la URL `/actualizar-tipo-incidente/`.
+
+La solicitud debe incluir en el `body` un objeto `JSON` en donde se indiquen los siguientes parametros: `id_incidente` e `id_tipo_incidente`
+
+Ejemplo:
+
+```JSON
+{
+  "id_incidente": 35,
+  "id_tipo_incidente": 2
+}
+```
+
+La respuesta es el incidente en formato `JSON`. Ver `GET '/incidentes'`
+
+14. `'/error-code/{:id_error_code}'` --> Consulta de código de error
 
 Se debe enviar un requerimiento `HTTP GET` a la URL `/error-code/{:id_error_code}`.
 

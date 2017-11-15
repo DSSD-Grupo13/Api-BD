@@ -120,6 +120,18 @@ $app->post("/incidentes", function (Request $request, Response $response, $args)
   return $response->withJson(['message' => $message, 'id_incidente' => $incident_id, 'case_id' => $case_id], 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
+$app->post("/actualizar-tipo-incidente/", function (Request $request, Response $response, $args) use ($incidentsRepository)
+{
+  $incident_id = $request->getParsedBodyParam('id_incidente');
+  $incident_type_id = $request->getParsedBodyParam('id_tipo_incidente');
+
+  \Validations::IsNotEmpty($incident_id, 'id_incidente');
+  \Validations::isValidIncidentTypeId($incident_type_id);
+
+  $incidentsRepository->updateType($incident_type_id, $incident_id);
+  return $response->withJson($incidentsRepository->getIncidente($incident_id), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+});
+
 $app->get("/error-code/{id_error_code}", function (Request $request, Response $response, $args)
 {
   $error_code =  $request->getAttribute('id_error_code');

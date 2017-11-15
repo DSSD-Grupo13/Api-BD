@@ -7,6 +7,7 @@ class IncidentsRepository extends PDORepository
   private $stmtDeleteObjetoIncidente;
   private $stmtCreate;
   private $stmtUpdateState;
+  private $stmtUpdateType;
   private $stmtNewIncidentObject;
   private $typesRepository;
   private $statesRepository;
@@ -20,6 +21,7 @@ class IncidentsRepository extends PDORepository
     $this->stmtCreate = $this->newPreparedStmt("INSERT INTO incidente (descripcion, idTipoIncidente, idUsuario, fechaInicio, fechaFin, idEstado)
                                                                                  VALUES (?, ?, ?, NOW(), NOW(), ?) ");
     $this->stmtUpdateState = $this->newPreparedStmt("UPDATE incidente SET idEstado = ? WHERE idIncidente = ?");
+    $this->stmtUpdateType = $this->newPreparedStmt("UPDATE incidente SET idTipoIncidente = ? WHERE idIncidente = ?");
     $this->stmtDeleteIncidente = $this->newPreparedStmt("DELETE FROM inciente WHERE idIncidente = ?");
     $this->stmtDeleteObjetoIncidente = $this->newPreparedStmt("DELETE FROM objetoIncidente WHERE idIncidente = ?");
     $this->stmtNewIncidentObject = $this->newPreparedStmt("INSERT INTO objetoIncidente (idIncidente, nombre, cantidad, descripcion)
@@ -74,6 +76,11 @@ class IncidentsRepository extends PDORepository
   public function updateState($idEstado, $idIncidente)
   {
     return $this->stmtUpdateState->execute([$idEstado, $idIncidente]);
+  }
+
+  public function updateType($idTipoIncidente, $idIncidente)
+  {
+    return $this->stmtUpdateType->execute([$idTipoIncidente, $idIncidente]);
   }
 
   private function saveIncidentObjects($idIncidente, $objects)
