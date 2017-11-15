@@ -24,12 +24,34 @@ La respuesta es un objeto `JSON` que contiene los datos del incidente:
 
 ```JSON
 {
-    "idIncidente": "1",
-    "idUsuario": "1",
-    "idTipoIncidente": "1",
-    "descripcion": "incendio ",
-    "estado": "1",
-    "fechaInicio": "03-11-2017"
+    "id": "73",
+    "descripcion": " choque",
+    "cliente": {
+        "id": "1",
+        "apellido": "lopez",
+        "nombre": "maria"
+    },
+    "tipo": {
+        "id": "2",
+        "nombre": "vehiculo"
+    },
+    "estado": {
+        "id": "1",
+        "nombre": "pendiente"
+    },
+    "fecha": "11-11-2017",
+    "objetos": [
+        {
+            "nombre": "parabrisas",
+            "cantidad": "2",
+            "descripcion": "el granizo estallo el vidrio"
+        },
+        {
+            "nombre": "puerta",
+            "cantidad": "1",
+            "descripcion": "puerta del conductor esta abollada"
+        }
+    ]
 }
 ```
 
@@ -37,30 +59,7 @@ La respuesta es un objeto `JSON` que contiene los datos del incidente:
 
 Se debe enviar un requerimiento `HTTP GET` a la URL `/incidente`.
 
-La respuesta es un array de objetos `JSON` que contiene los datos de los incidentes:
-
-    HTTP 200 OK
-
-```JSON
-[
-    {
-        "idIncidente": "1",
-        "idUsuario": "1",
-        "idTipoIncidente": "1",
-        "descripcion": "incendio ",
-        "estado": "1",
-        "fechaInicio": "03-11-2017"
-    },
-    {
-        "idIncidente": "2",
-        "idUsuario": "1",
-        "idTipoIncidente": "2",
-        "descripcion": " choque",
-        "estado": "1",
-        "fechaInicio": "03-11-2017"
-    }
-]
-```
+La respuesta es un array de objetos `incidente` en formato `JSON`. Ver `GET '/incidente/{:id_incidente}'`
 
 4. `'/incidentes/{:id_usuario}'` --> Retorna la lista de incidentes de un usuario
 
@@ -68,36 +67,13 @@ Se debe enviar un requerimiento `HTTP GET` a la URL `/incidentes/{:id_usuario}`.
 
 El parametro incluido en la URL debe ser el identificador del usuario que se quiere consultar
 
-La respuesta es un array de objetos `JSON` que contiene los datos de los incidentes:
-
-    HTTP 200 OK
-
-```JSON
-[
-    {
-        "idIncidente": "1",
-        "idUsuario": "1",
-        "idTipoIncidente": "1",
-        "descripcion": "incendio",
-        "estado": "1",
-        "fechaInicio": "03-11-2017"
-    },
-    {
-        "idIncidente": "2",
-        "idUsuario": "1",
-        "idTipoIncidente": "2",
-        "descripcion": " choque",
-        "estado": "1",
-        "fechaInicio": "03-11-2017"
-    }
-]
-```
+La respuesta es un array de objetos `incidente` en formato `JSON`. Ver `GET '/incidente/{:id_incidente}'`
 
 5. `'/incidentes'` --> Registrar incidente
 
 Se debe enviar un requerimiento `HTTP POST` a la URL `/incidentes`.
 
-La solicitud debe incluir en el `body` un objeto `JSON` en donde se indiquen los siguientes parametros: IdUsuario, IdTipoIncidente, Descripcion y los Objetos a Indemnizar
+La solicitud debe incluir en el `body` un objeto `JSON` en donde se indiquen los siguientes parametros: `idUsuario`, `idTipoIncidente`, `descripcion` y un array de `objetos` a indemnizar
 
 Ejemplo:
 
@@ -353,12 +329,12 @@ Ejemplo:
 
 ```JSON
 {
-  "id_incidente": 35,
-  "id_tipo_incidente": 2
+  "id_incidente": "35",
+  "id_tipo_incidente": "2"
 }
 ```
 
-La respuesta es el incidente en formato `JSON`. Ver `GET '/incidentes'`
+La respuesta es el incidente en formato `JSON`. Ver `GET '/incidente/{:id_incidente}'`
 
 14. `'/error-code/{:id_error_code}'` --> Consulta de código de error
 
