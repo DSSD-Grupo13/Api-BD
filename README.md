@@ -1,10 +1,10 @@
 # API de Incidentes
 
- Esta API consiste en un webservice REST que brinda un servicio de solicitud de presupuestos
+Esta API consiste en un webservice REST que brinda un servicio de solicitud de presupuestos
 
-  Esta implementado utilizando las tecnologias PHP, Apache y el framework Slim
+Esta implementado utilizando las tecnologias PHP, Apache y el framework Slim
 
-### Endpoints
+## Endpoints
 
 1. `'/'` --> Documentación
 
@@ -16,7 +16,7 @@
 
 	La respuesta es un objeto `JSON` que contiene los datos del incidente:
 
-	    HTTP 200 OK
+		HTTP 200 OK
 
 	```JSON
 	{
@@ -67,7 +67,7 @@
 
 5. `'/incidentes'` --> Registrar incidente
 
-	Se debe enviar un requerimiento `HTTP POST` a la URL `/incidentes`.
+	Se debe enviar un requerimiento `HTTP POST` a la URL `/incidentes`
 
 	La solicitud debe incluir en el `body` un objeto `JSON` en donde se indiquen los siguientes parametros: `idUsuario`, `idTipoIncidente`, `descripcion` y un array de `objetos` a indemnizar
 
@@ -87,19 +87,21 @@
 	  ]
 	}
 	```
+
 	Los cuatro parametros serán validados:
 
 	* `IdUsuario` debe ser el de un usuario registrado en el sistema
 	* `idTipoIncidente` debe ser alguno de los identificadores de tipo de incidentes
 	* `descripcion`: string
 	* `objetos`: es un array con los objetos a indemnizar. Para cada elemento se debe consignar:
-	  * `nombre`: nombre del objeto
-	  * `cantidad`: cantidad de objetos requerida
-	  * `descripcion`: descripcion del incidente sobre el objeto
+		* `nombre`: nombre del objeto
+		* `cantidad`: cantidad de objetos requerida
+		* `descripcion`: descripcion del incidente sobre el objeto
 
-	  Esto devuelve una respuesta en donde el `body` es un objeto `JSON` con la siguiente estructura:
 
-	    HTTP 200 OK
+	Esto devuelve una respuesta en donde el `body` es un objeto `JSON` con la siguiente estructura:
+
+		HTTP 200 OK
 
 	```JSON
 	{
@@ -108,6 +110,7 @@
 	  "error_code": "integer"
 	}
 	```
+
 	Donde:
 
 	* `idIncidente`: contiene un `id` que es el identificador asignado por el sistema
@@ -116,7 +119,7 @@
 
 	##### Ejemplo incidente creado correctamente:
 
-	    HTTP 200 OK
+		HTTP 200 OK
 
 	```JSON
 	{
@@ -124,9 +127,10 @@
 	    "idIncidente": "2"
 	}
 	```
+
 	##### Ejemplo error:
 
-	    HTTP 400 Bad Request
+		HTTP 400 Bad Request
 
 	```JSON
 	{
@@ -142,7 +146,7 @@
 
 	La respuesta es un array de objetos `JSON` que contiene los datos de los diferentes tipso de incidents:
 
-	    HTTP 200 OK
+		HTTP 200 OK
 
 	```JSON
 	[
@@ -350,13 +354,13 @@
 	}
 	```
 
-### Instalación
+## Instalación
 
 1. Se agrega un `Virtual-Host` al servidor de Apache2, en este ejemplo la API se registra en el dominio `api-incidentes.com`
 
-  Crear el archivo `/etc/apache2/sites-available/api-incidentes.com.conf` con el contenido:
+	Crear el archivo `/etc/apache2/sites-available/api-incidentes.com.conf` con el contenido:
 
-  ```xml
+	```xml
   <VirtualHost *:80>
       ServerAdmin webmaster@localhost
       ServerName api-incidentes.com
@@ -369,28 +373,26 @@
           Require all granted
       </Directory>
     </VirtualHost>
-  ```
+	```
 
-  `Nota: El directorio /var/www/html/api-incidentes.com debe existir`
+  >Nota: El directorio `/var/www/html/api-incidentes.com` debe existir
 
 2. Ejecutar los comandos en una terminal (los dos primeros pueden no ser necesarios si ya se ejecutaron alguna vez):
 
-  ```
-  sudo a2enmod rewrite
-
-  sudo a2dissite 000-default.conf
-
-  sudo a2ensite api-incidentes.com
-  ```
+	```
+	  sudo a2enmod rewrite
+	  sudo a2dissite 000-default.conf
+	  sudo a2ensite api-incidentes.com
+	```
 
 3. Agregar en hosts: `/etc/hosts`
 
-  ```
-  127.0.0.1 api-incidentes.com
-  ```
+	```
+	  127.0.0.1 api-incidentes.com
+	```
 
 4. Luego reiniciar el servicio de Apache
 
- ```
-   systemctl restart apache2
-```
+	```
+	  systemctl restart apache2
+	```
