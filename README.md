@@ -305,9 +305,9 @@ Esta implementado utilizando las tecnologias PHP, Apache y el framework Slim
 	* Todos los campos son obligatorios
 	* Se validará que el nombre de usuario no esté en uso
 
-	  Esto devuelve una respuesta en donde el `body` es un objeto `JSON` con la siguiente estructura:
+	Esto devuelve una respuesta en donde el `body` es un objeto `JSON` con la siguiente estructura:
 
-	    HTTP 200 OK
+		HTTP 200 OK
 
 	```JSON
 	{
