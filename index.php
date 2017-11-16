@@ -120,7 +120,7 @@ $app->post("/incidentes", function (Request $request, Response $response, $args)
   return $response->withJson(['message' => $message, 'id_incidente' => $incident_id, 'case_id' => $case_id], 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
-$app->post("/actualizar-tipo-incidente/", function (Request $request, Response $response, $args) use ($incidentsRepository)
+$app->post("/actualizar-tipo-incidente", function (Request $request, Response $response, $args) use ($incidentsRepository)
 {
   $incident_id = $request->getParsedBodyParam('id_incidente');
   $incident_type_id = $request->getParsedBodyParam('id_tipo_incidente');
