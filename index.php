@@ -120,10 +120,15 @@ $app->post("/incidentes", function (Request $request, Response $response, $args)
   return $response->withJson(['message' => $message, 'id_incidente' => $incident_id, 'case_id' => $case_id], 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
-$app->post("/actualizar-tipo-incidente", function (Request $request, Response $response, $args) use ($incidentsRepository)
+$app->post("/actualizar-tipo-incidente", function (Request $request, Response $response, $args) use ($incidentsRepository, $incidentTypesRepository)
 {
   $incident_id = $request->getParsedBodyParam('id_incidente');
   $incident_type_id = $request->getParsedBodyParam('id_tipo_incidente');
+  if (is_null($incident_type_id))
+  {
+    $incident_type =  $request->getParsedBodyParam('tipo_incidente', '');
+    $incident_type_id = $incidentTypesRepository->findByName($incident_type);
+  }
 
   \Validations::IsNotEmpty($incident_id, 'id_incidente');
   \Validations::isValidIncidentTypeId($incident_type_id);
