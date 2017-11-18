@@ -25,10 +25,11 @@ Esta implementado utilizando las tecnologias PHP, Apache y el framework Slim
         "cliente": {
             "id": "1",
             "apellido": "lopez",
-            "nombre": "maria"
+            "nombre": "maria",
+            "mail": "mlopez@gmail.com"
         },
         "tipo": {
-            "id": "2",
+            "id": "3",
             "nombre": "vehiculo"
         },
         "estado": {

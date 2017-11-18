@@ -3,16 +3,14 @@ class User extends Costumer implements \JsonSerializable
 {
   protected $nombreUsuario;
   protected $contrasena;
-  protected $email;
   protected $dni;
 
-  public function __construct($id, $nombreUsuario, $contrasena, $email, $dni, $apellido, $nombre)
+  public function __construct($id, $nombreUsuario, $contrasena, $mail, $dni, $apellido, $nombre)
   {
     $this->nombreUsuario = $nombreUsuario;
     $this->contrasena = $contrasena;
-    $this->email = $email;
     $this->dni = $dni;
-    parent::__construct($id, $apellido, $nombre);
+    parent::__construct($id, $apellido, $nombre, $mail);
   }
 
   public function jsonSerialize()

@@ -22,38 +22,39 @@ Esta implementado utilizando las tecnologias PHP, Apache y el framework Slim
 
         HTTP 200 OK
 
-    ```JSON
-    {
-        "id": "73",
-        "descripcion": " choque",
-        "cliente": {
-            "id": "1",
-            "apellido": "lopez",
-            "nombre": "maria"
-        },
-        "tipo": {
-            "id": "2",
-            "nombre": "vehiculo"
-        },
-        "estado": {
-            "id": "1",
-            "nombre": "pendiente"
-        },
-        "fecha": "11-11-2017",
-        "objetos": [
-            {
-                "nombre": "parabrisas",
-                "cantidad": "2",
-                "descripcion": "el granizo estallo el vidrio"
+        ```JSON
+        {
+            "id": "73",
+            "descripcion": " choque",
+            "cliente": {
+                "id": "1",
+                "apellido": "lopez",
+                "nombre": "maria",
+                "mail": "mlopez@gmail.com"
             },
-            {
-                "nombre": "puerta",
-                "cantidad": "1",
-                "descripcion": "puerta del conductor esta abollada"
-            }
-        ]
-    }
-    ```
+            "tipo": {
+                "id": "3",
+                "nombre": "vehiculo"
+            },
+            "estado": {
+                "id": "1",
+                "nombre": "pendiente"
+            },
+            "fecha": "11-11-2017",
+            "objetos": [
+                {
+                    "nombre": "parabrisas",
+                    "cantidad": "2",
+                    "descripcion": "el granizo estallo el vidrio"
+                },
+                {
+                    "nombre": "puerta",
+                    "cantidad": "1",
+                    "descripcion": "puerta del conductor esta abollada"
+                }
+            ]
+        }
+        ```
 
 3. `'/incidentes'` --> Retorna la lista de incidentes
 

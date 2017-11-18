@@ -90,7 +90,8 @@ class UserRepository extends PDORepository
       $answer[] = new Costumer(
         $element['idUsuario'],
         $element['apellido'],
-        $element['nombre']
+        $element['nombre'],
+        $element['mail']
       );
     }
     return $answer;
