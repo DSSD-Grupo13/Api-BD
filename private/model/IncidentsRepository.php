@@ -42,9 +42,9 @@ class IncidentsRepository extends PDORepository
     return $answer;
   }
 
-  public function newIncident($idUsuario, $descripcion, $tipo_incidente, $objects)
+  public function newIncident($idUsuario, $descripcion, $objects)
   {
-    $this->stmtCreate->execute([$descripcion, $tipo_incidente, $idUsuario, '1']);
+    $this->stmtCreate->execute([$descripcion, '1', $idUsuario, '1']);
     $qry = $this->newPreparedStmt("SELECT idincidente FROM incidente ORDER BY idincidente DESC LIMIT 1");
     $qry->execute();
     $id = $qry->fetchColumn();

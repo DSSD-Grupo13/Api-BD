@@ -48,9 +48,10 @@ CREATE TABLE `tipoincidente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `tipoincidente` (`nombre`, `idTipoIncidente`) VALUES
-('casa', 1),
-('vehiculo', 2),
-('objeto-mueble', 3);
+('no determinado', 1)
+('casa', 2),
+('vehiculo', 3),
+('objeto-mueble', 4);
 
 CREATE TABLE `usuario` (
   `idUsuario` int(5) NOT NULL,

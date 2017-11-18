@@ -69,14 +69,13 @@ Esta implementado utilizando las tecnologias PHP, Apache y el framework Slim
 
     Se debe enviar un requerimiento `HTTP POST` a la URL `/incidentes`
 
-    La solicitud debe incluir en el `body` un objeto `JSON` en donde se indiquen los siguientes parametros: `idUsuario`, `idTipoIncidente`, `descripcion` y un array de `objetos` a indemnizar
+    La solicitud debe incluir en el `body` un objeto `JSON` en donde se indiquen los siguientes parametros: `idUsuario`, `descripcion` y un array de `objetos` a indemnizar
 
     Ejemplo:
 
     ```JSON
     {
       "idUsuario": "1",
-      "idTipoIncidente": "2",
       "descripcion": "granizo",
       "objetos": [
         {
@@ -91,7 +90,6 @@ Esta implementado utilizando las tecnologias PHP, Apache y el framework Slim
     Los cuatro parametros serán validados:
 
     * `IdUsuario` debe ser el de un usuario registrado en el sistema
-    * `idTipoIncidente` debe ser alguno de los identificadores de tipo de incidentes
     * `descripcion`: string
     * `objetos`: es un array con los objetos a indemnizar. Para cada elemento se debe consignar:
         * `nombre`: nombre del objeto
