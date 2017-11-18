@@ -56,10 +56,10 @@ class IncidentTypesRepository extends PDORepository
 
   public function findByName($name)
   {
-    $data = $this->queryList("SELECT * FROM nombre where nombre = ?", [$name]);
+    $data = $this->queryList("SELECT * FROM tipoincidente where nombre = ?", [$name]);
     if (empty($data))
       return null;
     else
-      return $data['idTipoIncidente'];
+      return $data[0]['idTipoIncidente'];
   }
 }
