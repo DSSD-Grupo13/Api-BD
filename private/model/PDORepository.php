@@ -12,7 +12,7 @@ abstract class PDORepository
     $p = self::PASSWORD;
     $db = self::DB;
     $host = self::HOST;
-    $connection = new PDO("mysql:dbname=$db;host=$host", $u, $p);
+    $connection = new PDO("mysql:dbname=$db;host=$host;charset=utf8", $u, $p);
     $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     return $connection;
   }
