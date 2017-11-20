@@ -8,6 +8,7 @@ require_once './private/autoloader.php';
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
+$presupuestosRepository = new \PresupuestosRepository;
 $incidentTypesRepository = new \IncidentTypesRepository;
 $incidetStatesRepository = new \IncidentStatesRepository;
 $usersRepository = new \UserRepository;
@@ -106,7 +107,7 @@ $app->post("/incidentes", function (Request $request, Response $response, $args)
 {
   $user_id = $request->getParsedBodyParam('idUsuario');
   $description = $request->getParsedBodyParam('descripcion');
-  $objects = $request->getParsedBodyParam('objetos', []);
+  $objects = $request->getParsedBodyParam('objects', []);
 
   \Validations::isValidUserId($user_id);
 
@@ -133,6 +134,21 @@ $app->post("/actualizar-tipo-incidente", function (Request $request, Response $r
 
   $incidentsRepository->updateType($incident_type_id, $incident_id);
   return $response->withJson($incidentsRepository->getIncidente($incident_id), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+});
+
+$app->post("/presupuestos/{id_incidente}", function (Request $request, Response $response, $args) use ($presupuestosRepository)
+{
+  $incident_id = $request->getAttribute('id_incidente');
+  $objects = $request->getParsedBodyParam('objetos');
+  $total_final = $request->getParsedBodyParam('total_final');
+
+  \Validations::IsNotEmpty($incident_id, 'id_incidente');
+  \Validations::IsNotEmpty($objects, 'objetos');
+  \Validations::IsNotEmpty($total_final, 'total_final');
+
+  $presupuesto_id = $presupuestosRepository->create($incident_id, $objects, $total_final);
+  $message = "Se creó el presupuesto $presupuesto_id para el expediente # $incident_id";
+  return $response->withJson(['message' => $message, 'id_incidente' => $incident_id, 'id_presupuesto' => $presupuesto_id], 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
 $app->get("/error-code/{id_error_code}", function (Request $request, Response $response, $args)

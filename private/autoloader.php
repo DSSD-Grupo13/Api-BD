@@ -15,5 +15,6 @@ require_once 'private/model/IncidentsRepository.php';
 require_once 'private/model/UserRepository.php';
 require_once 'private/model/IncidentStatesRepository.php';
 require_once 'private/model/IncidentTypesRepository.php';
+require_once 'private/model/PresupuestosRepository.php';
 
 require_once 'private/api-bonita/Bonita.php';

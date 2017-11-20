@@ -97,7 +97,6 @@ Esta implementado utilizando las tecnologias PHP, Apache y el framework Slim
         * `cantidad`: cantidad de objetos requerida
         * `descripcion`: descripcion del incidente sobre el objeto
 
-
     Esto devuelve una respuesta en donde el `body` es un objeto `JSON` con la siguiente estructura:
 
         HTTP 200 OK
@@ -346,7 +345,79 @@ Esta implementado utilizando las tecnologias PHP, Apache y el framework Slim
 
     La respuesta es el incidente en formato `JSON`. Ver `GET '/incidente/{:id_incidente}'`
 
-14. `'/error-code/{:id_error_code}'` --> Consulta de código de error
+14. `'/presupuestos/{:id_incidente}'` --> Registrar presupuesto
+
+    Se debe enviar un requerimiento `HTTP POST` a la URL `/presupuestos/{:id_incidente}`
+
+    El parametro incluido en la URL es el identificador del incidente al cual se le asocia el presupuesto.
+
+    La solicitud debe incluir en el `body` un objeto `JSON` en donde se indiquen los siguientes parametros: `objetos` y `total_final`
+
+    Ejemplo:
+
+    ```JSON
+    {
+      "objetos": [
+        {
+          "nombre": "puerta",
+          "cantidad": 1,
+          "descripcion": "la fue abollada por el granizo",
+          "precio": 1871.19,
+          "total": 1871.19
+        },
+        {
+          "nombre": "parabrisas",
+          "cantidad": 2,
+          "descripcion": "el vidrio fue estallado por el granizo",
+          "precio": 2515.08,
+          "total": 5030.16
+        }
+      ],
+      "total_final": 6901.35
+    }
+    ```
+
+    Los cuatro parametros serán validados:
+
+    * `objetos`: es un array con los objetos a indemnizar. Para cada elemento se debe consignar:
+        * `nombre`: nombre del objeto
+        * `cantidad`: cantidad de objetos requerida
+        * `descripcion`: descripcion del incidente sobre el objeto
+        * `precio`: number, es el precio unitario del objeto
+        * `total`: number, el total por los objetos consignados
+    * `total_final`: number, es el valor total del presupuesto
+
+    Esto devuelve una respuesta en donde el `body` es un objeto `JSON` con la siguiente estructura:
+
+        HTTP 200 OK
+
+    ```JSON
+    {
+      "message": "string",
+      "id_incidente": "integer",
+      "id_presupuesto": "integer"
+    }
+    ```
+    Donde:
+
+    * `message`: contiene un texto descriptivo del resultado de la operación
+    * `id_incidente`: es el identificador del incidente al cual se asoció el presupuesto
+    * `id_presupuesto`: contiene un `id` que es el identificador asignado por el sistema para el presupuesto creado
+    * `error_code`: este campo unicamente se incluye  cuando la respuesta `HTTP` vuelve con un `Status Code 400 Bad Request`. Es un codigo de error cuyo significado puede consultarse en el endpoint `/error-code/{:id_error_code}`
+
+    Ejemplo:
+
+        HTTP 200 OK
+
+    ```JSON
+    {
+      "message": "Se creó el presupuesto 7 para el expediente # 5",
+      "id_incidente": "5",
+      "id_presupuesto": "7"
+    }
+    ```
+
+15. `'/error-code/{:id_error_code}'` --> Consulta de código de error
 
     Se debe enviar un requerimiento `HTTP GET` a la URL `/error-code/{:id_error_code}`.
 

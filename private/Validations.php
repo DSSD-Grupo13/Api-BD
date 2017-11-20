@@ -45,6 +45,11 @@ class Validations
       return new \UserRepository;
   }
 
+  private static function getIncidentRepository()
+  {
+      return new \IncidentsRepository(self::getIncidentTypeRepository(), self::getIncidentStateRepository(), self::getUsersRepository());
+  }
+
   private static function getIncidentTypeRepository()
   {
       return new \IncidentTypesRepository;
@@ -91,6 +96,15 @@ class Validations
       throw new \InvalidArgException(InvalidArgException::INVALID_INCIDENT_STATE);
 
     if (!self::getIncidentStateRepository()->incidentStateExists($incidentStateId))
+      throw new \InvalidArgException(InvalidArgException::INVALID_INCIDENT_STATE);
+  }
+
+  public static function isValidIncidentId($incidentId)
+  {
+    if (!isset($incidentId) || empty($incidentId))
+      throw new \InvalidArgException(InvalidArgException::INVALID_INCIDENT_STATE);
+
+    if (!self::getIncidentRepository()->incidentExists($incidentId))
       throw new \InvalidArgException(InvalidArgException::INVALID_INCIDENT_STATE);
   }
 

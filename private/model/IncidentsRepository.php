@@ -83,6 +83,11 @@ class IncidentsRepository extends PDORepository
     return $this->stmtUpdateType->execute([$idTipoIncidente, $idIncidente]);
   }
 
+  public function incidentExists($idIncidente)
+  {
+    return !empty($this->queryList("SELECT * FROM incidente WHERE idIncidente = ?", [$idIncidente]));
+  }
+
   private function saveIncidentObjects($idIncidente, $objects)
   {
     foreach ($objects as &$each) {
