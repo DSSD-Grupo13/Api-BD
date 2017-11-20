@@ -1,6 +1,6 @@
 # API de Incidentes
 
-Esta API consiste en un webservice REST que brinda un servicio de solicitud de presupuestos
+Esta API consiste en un webservice REST que permite a la aseguradora SSA gestionar sus clientes y sus incidentes
 
 Esta implementado utilizando las tecnologias PHP, Apache y el framework Slim
 
@@ -88,7 +88,7 @@ Esta implementado utilizando las tecnologias PHP, Apache y el framework Slim
     }
     ```
 
-    Los cuatro parametros serán validados:
+    Todos los parámetros serán validados:
 
     * `IdUsuario` debe ser el de un usuario registrado en el sistema
     * `descripcion`: string
@@ -298,7 +298,7 @@ Esta implementado utilizando las tecnologias PHP, Apache y el framework Slim
       "DNI": "37058719"
     }
     ```
-    Los cuatro parametros serán validados:
+    Todos los parámetros serán validados:
 
     * Todos los campos son obligatorios
     * Se validará que el nombre de usuario no esté en uso
@@ -377,7 +377,7 @@ Esta implementado utilizando las tecnologias PHP, Apache y el framework Slim
     }
     ```
 
-    Los cuatro parametros serán validados:
+    Todos los parámetros serán validados:
 
     * `objetos`: es un array con los objetos a indemnizar. Para cada elemento se debe consignar:
         * `nombre`: nombre del objeto
