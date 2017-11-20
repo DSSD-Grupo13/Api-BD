@@ -107,7 +107,7 @@ $app->post("/incidentes", function (Request $request, Response $response, $args)
 {
   $user_id = $request->getParsedBodyParam('idUsuario');
   $description = $request->getParsedBodyParam('descripcion');
-  $objects = $request->getParsedBodyParam('objects', []);
+  $objects = $request->getParsedBodyParam('objetos', []);
 
   \Validations::isValidUserId($user_id);
 
@@ -139,7 +139,7 @@ $app->post("/actualizar-tipo-incidente", function (Request $request, Response $r
 $app->post("/presupuestos/{id_incidente}", function (Request $request, Response $response, $args) use ($presupuestosRepository)
 {
   $incident_id = $request->getAttribute('id_incidente');
-  $objects = $request->getParsedBodyParam('objetos');
+  $objects = $request->getParsedBodyParam('objetos', []);
   $total_final = $request->getParsedBodyParam('total_final');
 
   \Validations::IsNotEmpty($incident_id, 'id_incidente');
