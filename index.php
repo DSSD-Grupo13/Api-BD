@@ -143,6 +143,7 @@ $app->post("/presupuestos/{id_incidente}", function (Request $request, Response 
   $total_final = $request->getParsedBodyParam('total_final');
 
   \Validations::IsNotEmpty($incident_id, 'id_incidente');
+  \Validations::isValidIncidentId($incident_id);
   \Validations::IsNotEmpty($objects, 'objetos');
   \Validations::IsNotEmpty($total_final, 'total_final');
 

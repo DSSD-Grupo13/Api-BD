@@ -8,6 +8,7 @@ class InvalidArgException extends Exception
   const INVALID_INCIDENT_STATE = 5;
   const USERNAME_EXISTS = 6;
   const EMPTY_ARG = 7;
+  const INVALID_INCIDENT = 8;
 
   private static $descriptions = [
     self::INVALID_DATE_FORMAT => 'Formato de fecha inválido, usar dd-mm-aaaa. Ejemplo <25-10-2017>',
@@ -16,7 +17,8 @@ class InvalidArgException extends Exception
     self::INVALID_INCIDENT_TYPE => 'El Tipo de Incidente no existe en el sistema',
     self::INVALID_INCIDENT_STATE => 'El Estado de Incidente no existe en el sistema',
     self::USERNAME_EXISTS => 'El nombre de usuario se encuentra en uso',
-    self::EMPTY_ARG => 'Valor inválido, vacio o nulo'
+    self::EMPTY_ARG => 'Valor inválido, vacio o nulo',
+    self::INVALID_INCIDENT => 'El Incidente no existe en el sistema'
   ];
 
   public static function getDescription($error_code)
@@ -102,10 +104,10 @@ class Validations
   public static function isValidIncidentId($incidentId)
   {
     if (!isset($incidentId) || empty($incidentId))
-      throw new \InvalidArgException(InvalidArgException::INVALID_INCIDENT_STATE);
+      throw new \InvalidArgException(InvalidArgException::INVALID_INCIDENT);
 
     if (!self::getIncidentRepository()->incidentExists($incidentId))
-      throw new \InvalidArgException(InvalidArgException::INVALID_INCIDENT_STATE);
+      throw new \InvalidArgException(InvalidArgException::INVALID_INCIDENT);
   }
 
   public static function userNameExists($userName)
