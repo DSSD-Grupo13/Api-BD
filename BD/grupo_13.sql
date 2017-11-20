@@ -63,6 +63,26 @@ CREATE TABLE `usuario` (
   `mail` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `presupuesto` (
+  `idPresupuesto` int(10) NOT NULL,
+  `total` decimal(15, 2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `objetos_presupuesto` (
+  `idObjeto` int(10) NOT NULL,
+  `idPresupuesto` int(10) NOT NULL,
+  `nombre` varchar(20) NOT NULL,
+  `cantidad` int(5) NOT NULL,
+  `descripcion` varchar(100) NOT NULL,
+  `precio` decimal(15, 2) NOT NULL,
+  `total` decimal(15, 2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `presupuestos_incidente` (
+  `idIncidente` int(10) NOT NULL,
+  `idPresupuesto` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 INSERT INTO `usuario` (`idUsuario`, `nombreUsuario`, `contrasena`, `nombre`, `apellido`, `dni`, `mail`) VALUES
 (1, 'mlopez', 'bpm', 'maria', 'lopez', 38951674, 'mlopez@gmail.com'),
 (2, 'mgomez', 'bpm', 'mateo', 'gomez', 37694301, 'mgomez@gmail.com'),
@@ -84,6 +104,18 @@ ALTER TABLE `tipoincidente`
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`idUsuario`);
 
+ALTER TABLE `presupuesto`
+  ADD PRIMARY KEY (`idPresupuesto`);
+
+ALTER TABLE `objetos_presupuesto`
+  ADD PRIMARY KEY (`idObjeto`),
+  ADD KEY `idPresupuesto` (`idPresupuesto`);
+
+ALTER TABLE `presupuestos_incidente`
+  ADD PRIMARY KEY (`idIncidente`, `idPresupuesto`),
+  ADD KEY `idIncidente` (`idIncidente`),
+  ADD KEY `idPresupuesto` (`idPresupuesto`);
+
 ALTER TABLE `estado`
   MODIFY `idEstado` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
@@ -96,8 +128,21 @@ ALTER TABLE `tipoincidente`
 ALTER TABLE `usuario`
   MODIFY `idUsuario` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
+ALTER TABLE `presupuesto`
+  MODIFY `idPresupuesto` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+ALTER TABLE `objetos_presupuesto`
+  MODIFY `idObjeto` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 ALTER TABLE `incidente`
   ADD CONSTRAINT `incidente_ibfk_1` FOREIGN KEY (`idTipoIncidente`) REFERENCES `tipoincidente` (`idTipoIncidente`),
   ADD CONSTRAINT `incidente_ibfk_2` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`),
   ADD CONSTRAINT `incidente_ibfk_3` FOREIGN KEY (`idEstado`) REFERENCES `estado` (`idEstado`);
+
+ALTER TABLE `objetos_presupuesto`
+  ADD CONSTRAINT `objetos_presupuesto_ibfk_1` FOREIGN KEY (`idPresupuesto`) REFERENCES `presupuesto` (`idPresupuesto`);
+
+ALTER TABLE `presupuestos_incidente`
+  ADD CONSTRAINT `presupuestos_incidente_ibfk_1` FOREIGN KEY (`idIncidente`) REFERENCES `incidente` (`idIncidente`),
+  ADD CONSTRAINT `presupuestos_incidente_ibfk_2` FOREIGN KEY (`idPresupuesto`) REFERENCES `presupuesto` (`idPresupuesto`);
 COMMIT;
