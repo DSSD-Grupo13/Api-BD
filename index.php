@@ -147,7 +147,7 @@ $app->post("/actualizar-estado-incidente", function (Request $request, Response 
   }
 
   \Validations::IsNotEmpty($incident_id, 'id_incidente');
-  \Validations::isValidIncidentTypeId($incident_state_id);
+  \Validations::isValidIncidentStateId($incident_state_id);
 
   $incidentsRepository->updateState($incident_state_id, $incident_id);
   return $response->withJson($incidentsRepository->getIncidente($incident_id), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);

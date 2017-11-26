@@ -35,6 +35,15 @@ class IncidentStatesRepository extends PDORepository
     return $this->stmtCreate->execute([$nombre]);
   }
 
+  public function findByName($name)
+  {
+    $data = $this->queryList("SELECT * FROM estado where nombre = ?", [$name]);
+    if (empty($data))
+      return null;
+    else
+      return $data[0]['idEstado'];
+  }
+
   private function queryToIncidentState($query)
   {
     $answer = [];
