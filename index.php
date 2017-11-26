@@ -10,9 +10,9 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 $presupuestosRepository = new \PresupuestosRepository;
 $incidentTypesRepository = new \IncidentTypesRepository;
-$incidetStatesRepository = new \IncidentStatesRepository;
+$incidentStatesRepository = new \IncidentStatesRepository;
 $usersRepository = new \UserRepository;
-$incidentsRepository = new \IncidentsRepository($incidentTypesRepository, $incidetStatesRepository, $usersRepository);
+$incidentsRepository = new \IncidentsRepository($incidentTypesRepository, $incidentStatesRepository, $usersRepository);
 
 $app = new \Slim\App;
 $container = $app->getContainer();
@@ -51,16 +51,16 @@ $app->get("/tipos-incidente", function (Request $request, Response $response, $a
   return $response->withJson($incidentTypesRepository->getIncidentTypes(), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
-$app->get("/estados-incidente/{id_estado_incidente}", function (Request $request, Response $response, $args) use ($incidetStatesRepository)
+$app->get("/estados-incidente/{id_estado_incidente}", function (Request $request, Response $response, $args) use ($incidentStatesRepository)
 {
   $id_estado_incidente =  $request->getAttribute('id_estado_incidente');
   \Validations::isValidIncidentStateId($id_estado_incidente);
-  return $response->withJson($incidetStatesRepository->getIncidentState($id_estado_incidente), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+  return $response->withJson($incidentStatesRepository->getIncidentState($id_estado_incidente), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
-$app->get("/estados-incidente", function (Request $request, Response $response, $args) use ($incidetStatesRepository)
+$app->get("/estados-incidente", function (Request $request, Response $response, $args) use ($incidentStatesRepository)
 {
-  return $response->withJson($incidetStatesRepository->getIncidentStates(), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+  return $response->withJson($incidentStatesRepository->getIncidentStates(), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
 $app->get("/incidentes/{id_usuario}", function (Request $request, Response $response, $args) use ($incidentsRepository)
@@ -133,6 +133,23 @@ $app->post("/actualizar-tipo-incidente", function (Request $request, Response $r
   \Validations::isValidIncidentTypeId($incident_type_id);
 
   $incidentsRepository->updateType($incident_type_id, $incident_id);
+  return $response->withJson($incidentsRepository->getIncidente($incident_id), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+});
+
+$app->post("/actualizar-estado-incidente", function (Request $request, Response $response, $args) use ($incidentsRepository, $incidentStatesRepository)
+{
+  $incident_id = $request->getParsedBodyParam('id_incidente');
+  $incident_state_id = $request->getParsedBodyParam('id_estado_incidente');
+  if (is_null($incident_state_id))
+  {
+    $incident_state =  $request->getParsedBodyParam('estado_incidente', '');
+    $incident_state_id = $incidentStatesRepository->findByName($incident_state);
+  }
+
+  \Validations::IsNotEmpty($incident_id, 'id_incidente');
+  \Validations::isValidIncidentTypeId($incident_state_id);
+
+  $incidentsRepository->updateState($incident_state_id, $incident_id);
   return $response->withJson($incidentsRepository->getIncidente($incident_id), 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 

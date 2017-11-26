@@ -417,7 +417,34 @@ Esta implementado utilizando las tecnologias PHP, Apache y el framework Slim
     }
     ```
 
-15. `'/error-code/{:id_error_code}'` --> Consulta de código de error
+15. `'/actualizar-estado-incidente'` --> Actualizar estado de incidente
+
+    Se debe enviar un requerimiento `HTTP POST` a la URL `/actualizar-estado-incidente`.
+
+    La solicitud debe incluir en el `body` un objeto `JSON` en donde se indiquen los siguientes parametros: `id_incidente` e `id_estado_incidente`
+
+    Ejemplo:
+
+    ```JSON
+    {
+      "id_incidente": "35",
+      "id_estado_incidente": "1"
+    }
+    ```
+    Tambien es valido enviar el estado de incidente por su nombre, en el parametro `estado`
+
+    Ejemplo:
+
+    ```JSON
+    {
+      "id_incidente": "35",
+      "estado": "pendiente"
+    }
+    ```
+
+    La respuesta es el incidente en formato `JSON`. Ver `GET '/incidente/{:id_incidente}'`
+
+16. `'/error-code/{:id_error_code}'` --> Consulta de código de error
 
     Se debe enviar un requerimiento `HTTP GET` a la URL `/error-code/{:id_error_code}`.
 
