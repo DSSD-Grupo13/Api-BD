@@ -67,6 +67,13 @@ class IncidentsRepository extends PDORepository
     return $this->queryToIncidenteArray($this->queryList("SELECT * FROM incidente where idIncidente = ?", [$idIncidente]))[0];
   }
 
+  public function getIncidentesByState($idEstado)
+  {
+    $qry = $this->newPreparedStmt("SELECT COUNT(*) FROM incidente where idEstado = ?");
+    $qry->execute([$idEstado]);
+    return intval($qry->fetchColumn());
+  }
+
   public function delete($idIncidente)
   {
     $this->stmtDeleteObjetoIncidente->execute([$idIncidente]);

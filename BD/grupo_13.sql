@@ -22,7 +22,10 @@ CREATE TABLE `estado` (
 
 INSERT INTO `estado` (`idEstado`, `nombre`) VALUES
 (1, 'pendiente'),
-(2, 'en-presupuesto');
+(2, 'en inspeccion'),
+(3, 'revision presupuestos'),
+(4, 'aprobado'),
+(5, 'rechazado');
 
 CREATE TABLE `incidente` (
   `idIncidente` int(10) NOT NULL,

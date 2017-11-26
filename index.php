@@ -169,6 +169,14 @@ $app->post("/presupuestos/{id_incidente}", function (Request $request, Response 
   return $response->withJson(['message' => $message, 'id_incidente' => $incident_id, 'id_presupuesto' => $presupuesto_id], 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
+$app->get("/metricas-presupuestos", function (Request $request, Response $response, $args) use ($incidentsRepository)
+{
+  $cantidad_aprobados = $incidentsRepository->getIncidentesByState(4);
+  $cantidad_rechazados = $incidentsRepository->getIncidentesByState(5);
+  $total = $cantidad_aprobados + $cantidad_rechazados;
+  return $response->withJson(['cantidad_aprobados' => $cantidad_aprobados, 'cantidad_rechazados' => $cantidad_rechazados, 'total' => $total], 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+});
+
 $app->get("/error-code/{id_error_code}", function (Request $request, Response $response, $args)
 {
   $error_code =  $request->getAttribute('id_error_code');
