@@ -188,6 +188,17 @@ $app->get("/metrica-tipo-incidente", function (Request $request, Response $respo
   return $response->withJson($result, 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 });
 
+$app->get("/metrica-estado-incidente", function (Request $request, Response $response, $args) use ($incidentsRepository, $incidentStatesRepository)
+{
+  $estados = $incidentStatesRepository->getIncidentStates();
+  $result =  [];
+  foreach ($estados as &$element) {
+    $result[] = ['nombre' => $element->nombre, 'cantidad' => $incidentsRepository->getIncidentesByState($element->id)];
+  }
+
+  return $response->withJson($result, 200, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+});
+
 $app->get("/error-code/{id_error_code}", function (Request $request, Response $response, $args)
 {
   $error_code =  $request->getAttribute('id_error_code');
