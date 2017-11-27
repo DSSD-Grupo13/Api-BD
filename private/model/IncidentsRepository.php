@@ -74,6 +74,13 @@ class IncidentsRepository extends PDORepository
     return intval($qry->fetchColumn());
   }
 
+  public function getIncidentesByType($idTipoIncidente)
+  {
+    $qry = $this->newPreparedStmt("SELECT COUNT(*) FROM incidente where idTipoIncidente = ?");
+    $qry->execute([$idTipoIncidente]);
+    return intval($qry->fetchColumn());
+  }
+
   public function delete($idIncidente)
   {
     $this->stmtDeleteObjetoIncidente->execute([$idIncidente]);

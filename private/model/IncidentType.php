@@ -1,8 +1,8 @@
 <?php
 class IncidentType implements \JsonSerializable
 {
-  private $id;
-  private $nombre;
+  public $id;
+  public $nombre;
 
   public function __construct($id, $nombre)
   {
