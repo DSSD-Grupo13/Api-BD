@@ -87,10 +87,10 @@ CREATE TABLE `presupuestos_incidente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `usuario` (`idUsuario`, `nombreUsuario`, `contrasena`, `nombre`, `apellido`, `dni`, `mail`) VALUES
-(1, 'mlopez', 'bpm', 'maria', 'lopez', 38951674, 'mlopez@gmail.com'),
-(2, 'mgomez', 'bpm', 'mateo', 'gomez', 37694301, 'mgomez@gmail.com'),
-(3, 'jrodriguez', 'bpm', 'juan', 'rodriguez', 36950167, 'jrodriguez@gmail.com'),
-(4, 'wgarcia', 'bpm', 'walter', 'garcia', 33694178, 'wgarcia64@gmail.com');
+(1, 'mlopez', 'bpm', 'maria', 'lopez', 38951674, 'ortu.agustin@gmail.com'),
+(2, 'mgomez', 'bpm', 'mateo', 'gomez', 37694301, 'corbatta.emiliana@gmail.com'),
+(3, 'jrodriguez', 'bpm', 'juan', 'rodriguez', 36950167, 'mastronardi.gonzalo@gmail.com'),
+(4, 'wgarcia', 'bpm', 'walter', 'garcia', 33694178, 'ortu.agustin@gmail.com');
 
 ALTER TABLE `estado`
   ADD PRIMARY KEY (`idEstado`);
